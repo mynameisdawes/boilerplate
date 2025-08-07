@@ -1,0 +1,103 @@
+@use "utilities";
+
+.modal__cookies .modal__content {
+    border-start-start-radius: var(--rounded_sm);
+    border-start-end-radius: var(--rounded_sm);
+}
+
+.cookie_consent_wrapper {
+    & > .cookie_consent_wrapper {
+        display: none;
+    }
+
+    &.open {
+        & > .cookie_consent_wrapper {
+            display: block;
+        }
+
+        &>header .label::before {
+            transform: translateY(-50%) rotate(315deg);
+        }
+    }
+
+    .label {
+        position: relative;
+
+        &::before {
+            position: absolute;
+            inset-block-start: 50%;
+            transform: translateY(-50%) rotate(135deg);
+            border: 1px solid black;
+            border-width: 0.15em 0.15em 0 0;
+            block-size: 0.5em;
+            inline-size: 0.5em;
+            content: "";
+        }
+    }
+
+    &.type {
+        .label {
+            &::before {
+                inset-inline-start: -0.9em;
+            }
+        }
+    }
+
+    &.provider {
+        border: 1px solid var(--color_border);
+        border-radius: 5px;
+        padding-block: 0.5em;
+        padding-inline: 1em;
+
+        .label {
+            &::before {
+                inset-inline-end: 0;
+            }
+        }
+    }
+}
+
+.consent__cookies {
+    position: fixed;
+    inset-block-start: 100%;
+    inset-inline-end: 100%;
+    inset-inline-start: -100%;
+    transform: translateY(0);
+    z-index: 99999;
+    transition: left 0s 0.4s, right 0s 0.4s,
+        var(--transition_duration_fast) transform var(--transition_easing_cubic);
+    background-color: var(--color_secondary);
+    padding-block: 20px;
+    padding-inline: 30px;
+    overflow: hidden;
+    color: var(--color_secondary_contrasting);
+    font-size: 0.9em;
+
+    @include utilities.bp(3) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1em;
+    }
+
+    &.is_visible {
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        transform: translateY(-100%);
+        transition: left 0s, right 0s,
+            var(--transition_duration_fast) transform var(--transition_easing_cubic);
+    }
+
+    .information {
+        margin-block-end: 10px;
+
+        @include utilities.bp(3) {
+            margin-inline-end: 30px;
+            margin-block-end: 0;
+        }
+    }
+
+    .btn {
+        white-space: nowrap;
+    }
+}

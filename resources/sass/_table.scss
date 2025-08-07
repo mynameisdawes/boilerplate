@@ -1,0 +1,179 @@
+@use "utilities";
+@use "variables";
+
+table {
+    display: table;
+    vertical-align: top;
+    border-collapse: collapse;
+    border-spacing: 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    color: currentColor;
+    text-align: left;
+    @extend %el__spacing;
+    line-height: 1;
+    @include utilities.scroll_x;
+    @include utilities.scroll_x_shadow;
+
+    tr {
+        border-block-end-width: 1px;
+        border-block-end-style: solid;
+        border-block-end-color: var(--color_border);
+    }
+
+    thead {
+
+        th,
+        td {
+            font-weight: bold;
+            font-size: 0.8em;
+            text-transform: uppercase;
+        }
+    }
+
+    tbody {
+        vertical-align: top;
+
+        tr:last-child {
+            border-block-end-width: 0;
+        }
+    }
+
+    th,
+    td {
+        vertical-align: middle;
+        padding-block: 8px;
+        padding-inline: 10px;
+        white-space: nowrap;
+    }
+}
+
+@include utilities.bps("table.table--edgeless", variables.$breakpoints_common) {
+    thead {
+        tr:first-child th {
+            padding-block-start: 0;
+        }
+    }
+
+    tbody {
+        &:first-child tr:first-child td {
+            padding-block-start: 0;
+        }
+
+        &:last-child tr:last-child td {
+            padding-block-end: 0;
+        }
+    }
+
+    th,
+    td {
+        &:first-child {
+            padding-inline-start: 0;
+        }
+
+        &:last-child {
+            padding-inline-end: 0;
+        }
+    }
+}
+
+@include utilities.bps("table.table--spacious", variables.$breakpoints_common) {
+    td {
+        padding-block: 15px;
+        padding-inline: 10px;
+    }
+}
+
+@include utilities.bps("table.table--bordered", variables.$breakpoints_common) {
+
+    th,
+    td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--color_border);
+    }
+
+    tr {
+        border-block-end-width: 0;
+    }
+}
+
+@include utilities.bps("table.table--bordered-outer", variables.$breakpoints_common) {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color_border);
+}
+
+@include utilities.bps("table.table--responsive", variables.$breakpoints_common) {
+    display: inline-block;
+    inline-size: auto;
+    white-space: nowrap;
+}
+
+@include utilities.bps("table.table--card", variables.$breakpoints_common) {
+    -webkit-overflow-scrolling: auto;
+    background: none;
+    overflow-x: visible;
+    animation-name: none;
+
+    tr,
+    th,
+    td {
+        background-image: none;
+        background-color: transparent !important;
+    }
+
+    thead {
+        display: none;
+    }
+
+    &,
+    tbody,
+    tr,
+    td {
+        display: block;
+        inline-size: 100%;
+    }
+
+    tr {
+        margin-block-end: 1em;
+        box-shadow: 0 0.5em 1.5em -0.5em var(--color_dark_transparent);
+        border-width: 1px;
+        border-style: solid;
+        border-color: var(--color_border);
+        padding: 1em;
+
+        &:last-child {
+            margin-block-end: 0;
+            border-block-end-width: 1px;
+        }
+    }
+
+    td {
+        border-width: 0;
+        border-block-end-width: 1px;
+        border-block-end-style: solid;
+        border-block-end-color: var(--color_border);
+        padding-inline-end: 0;
+        padding-inline-start: 0;
+
+        &:first-child {
+            padding-block-start: 0;
+        }
+
+        &:last-child {
+            border-block-end-width: 0;
+            padding-block-end: 0;
+        }
+
+        &::before {
+            display: block;
+            position: relative;
+            margin-block-end: 6px;
+            content: attr(data-header);
+            font-weight: bold;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+    }
+}

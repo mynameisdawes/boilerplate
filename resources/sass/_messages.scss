@@ -1,0 +1,144 @@
+@use "utilities";
+
+.message {
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows var(--transition_duration_fast) ease, opacity var(--transition_duration_fast) var(--transition_duration_fast) ease;
+    overflow: hidden;
+
+    &.message--top {
+        position: fixed;
+        inset-block-start: var(--block_size_header_total);
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        z-index: 999;
+        inline-size: 100%;
+    }
+
+    &.is_hidden {
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition: grid-template-rows var(--transition_duration_fast) var(--transition_duration_fast) ease, opacity var(--transition_duration_fast) ease;
+    }
+
+    .message__outer {
+        overflow: hidden;
+    }
+
+    .message__inner {
+        margin-block-end: var(--spacing_4);
+        box-shadow: inset 0 0 0 1px var(--color_dark_transparent);
+        background-color: var(--color_background__accent);
+        font-size: 0.9em;
+        line-height: 1.6;
+        display: grid;
+        grid-template-columns: 1fr max-content;
+
+        .message__content {
+            padding-block: 0.5rem;
+            padding-inline: 0.8rem;
+            text-wrap: pretty;
+        }
+
+        .message__dismiss {
+            --dismiss_icon_padding: 0.5rem 0.8rem;
+            --dismiss_icon_length: 14px;
+            @extend %overlay__dismiss;
+            color: var(--color_text);
+            position: relative;
+            inline-size: calc(1rem + 1lh);
+        }
+    }
+
+    &:last-child {
+        .message__inner {
+            margin-block-end: 0;
+        }
+    }
+
+    &.message--neutral {
+        .message__inner {
+            background-color: var(--color_neutral);
+            color: var(--color_neutral_contrasting);
+            .message__dismiss {
+                color: var(--color_neutral_contrasting);
+            }
+        }
+    }
+
+    &.message--positive {
+        .message__inner {
+            background-color: var(--color_positive);
+            color: var(--color_positive_contrasting);
+            .message__dismiss {
+                color: var(--color_positive_contrasting);
+            }
+        }
+    }
+
+    &.message--warning {
+        .message__inner {
+            background-color: var(--color_warning);
+            color: var(--color_warning_contrasting);
+            .message__dismiss {
+                color: var(--color_warning_contrasting);
+            }
+        }
+    }
+
+    &.message--negative {
+        .message__inner {
+            background-color: var(--color_negative);
+            color: var(--color_negative_contrasting);
+            .message__dismiss {
+                color: var(--color_negative_contrasting);
+            }
+        }
+    }
+}
+
+.tooltip {
+    position: relative;
+    font-size: 0.8rem;
+    width: fit-content;
+
+    .tooltip-icon {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid var(--color_border);
+        border-radius: var(--infinity);
+        background-color: var(--color_border);
+        inline-size: 20px;
+        block-size: 20px;
+
+        &:after {
+            position: absolute;
+            inset: 0;
+            content: "i";
+            color: var(--color_white);
+            font-weight: bold;
+            text-align: center;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .popup {
+        inline-size: 24ch;
+        z-index: 1;
+        --_popup_arrow_position: calc(100% - (var(--popup_arrow_size) + (var(--popup_border_width) * 2)) - var(--popup_arrow_position));
+        inset-inline-start: auto;
+        inset-inline-end: -12px;
+        inset-block-start: auto;
+        inset-block-end: calc(100% + var(--popup_arrow_size));
+        transform-origin: var(--_popup_arrow_position) 100%;
+        &::before {
+            inset-block-start: calc(100% - (var(--popup_arrow_size) + var(--popup_border_width) * 2) / 2);
+            inset-block-end: auto;
+            rotate: -135deg;
+        }
+    }
+}

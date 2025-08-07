@@ -1,0 +1,65 @@
+server {
+    server_name www.fire.local;
+    listen 80;
+    listen [::]:80;
+    add_header Cache-Control "max-age=3600";
+
+    include snippets/acme-challenge.conf;
+
+    return 301 http://fire.local$request_uri;
+}
+
+server {
+    server_name fire.local;
+    listen 80;
+    listen [::]:80;
+
+    add_header X-Frame-Options DENY;
+
+    root /absolute_path;
+
+    access_log /var/log/nginx/fire_local.access.log;
+    error_log /var/log/nginx/fire_local.error.log;
+
+    index index.php index.html index.htm;
+    charset utf-8;
+
+    client_max_body_size 100m;
+
+    sendfile off;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+        root /var/www/html;
+    }
+
+    location ~ [^/]\.php(/|$) {
+        fastcgi_split_path_info ^(.+\.php)(/.+)\$;
+        if (!-f $document_root$fastcgi_script_name) {
+            return 404;
+        }
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_read_timeout 600;
+        proxy_read_timeout 600;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|webp|gif|ico|html)$ {
+        expires max;
+    }
+
+    location ~ /\. {
+        deny all;
+    }
+
+    include snippets/acme-challenge.conf;
+}

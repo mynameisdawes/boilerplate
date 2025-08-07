@@ -1,0 +1,115 @@
+@use "utilities";
+@use "variables";
+
+/*! purgecss start ignore */
+.card-item {
+    display: grid;
+    align-items: stretch;
+    justify-items: stretch;
+    background-color: var(--color_background__field);
+    color: var(--color_white);
+    font-weight: bold;
+    font-size: 2rem;
+    text-decoration: none;
+    & > * {
+        grid-row: 1 / -1;
+        grid-column: 1 / -1;
+    }
+    &:has(img) {
+        background-color: transparent;
+    }
+    img {
+        align-self: stretch;
+        justify-self: stretch;
+        width: 100%;
+        height: 100%;
+        min-inline-size: 100%;
+        max-inline-size: none;
+        min-block-size: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    header {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing_6);
+    }
+    div {
+        text-align: center;
+    }
+}
+
+.card-list-outer {
+    position: relative;
+    height: 100svh;
+    overflow: clip;
+    &.will_scroll {
+        pointer-events: none;
+        .pre-scroll-section {
+            display: grid;
+        }
+    }
+    &.has_scrolled {
+        pointer-events: all;
+        .card-list-inner {
+            transform: translateY(0%);
+        }
+    }
+    &.has_scrolled_instant {
+        pointer-events: all;
+        .card-list-inner {
+            transform: translateY(0%);
+            transition-duration: 0s;
+        }
+    }
+    .card-list-inner {
+        transform: translateY(800%);
+        transition: 3s transform var(--transition_easing_cubic);
+    }
+    .pre-scroll-section {
+        display: none;
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        left: 0;
+        gap: var(--spacing_4);
+        padding-inline: var(--spacing_6);
+        padding-block-start: var(--spacing_6);
+        .card-item {
+            scale: 0.95;
+            background-color: var(--color_text);
+        }
+    }
+    .scroll-section {
+        display: grid;
+        position: relative;
+        gap: var(--spacing_4);
+        padding-inline: var(--spacing_6);
+        padding-block: var(--spacing_2);
+        height: 100svh;
+        overflow-x: clip;
+        overflow-y: scroll;
+        overscroll-behavior: contain;
+        &.is_observed {
+            .card-item {
+                scale: 1;
+                filter: blur(0px);
+                transition: var(--transition_duration_fast) scale ease, var(--transition_duration_fast) filter ease;
+                &:not(.is_focussed) {
+                    scale: 0.95;
+                    filter: blur(2px);
+                }
+            }
+        }
+    }
+    .card-item {
+        border-radius: calc(var(--rounded_sm) * 2);
+        height: 80svh;
+        scroll-snap-align: center;
+        img {
+            border-radius: calc(var(--rounded_sm) * 2);
+        }
+    }
+}
+/*! purgecss end ignore */

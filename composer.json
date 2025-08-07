@@ -1,0 +1,149 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The Laravel Framework.",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^10.10",
+        "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.2",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "vektor/account": "*",
+        "vektor/api": "*",
+        "vektor/api_keys": "*",
+        "vektor/blog": "*",
+        "vektor/cash": "*",
+        "vektor/cms": "*",
+        "vektor/events": "*",
+        "vektor/marketing": "*",
+        "vektor/onecrm": "*",
+        "vektor/pages": "*",
+        "vektor/purchase_order": "*",
+        "vektor/passwordless_auth": "*",
+        "vektor/shop": "*",
+        "vektor/stripe": "*",
+        "vektor/utilities": "*"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.9.1",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.3",
+        "phpunit/phpunit": "^10.1",
+        "spatie/laravel-ignition": "^2.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ]
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/api"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/api_keys"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/blog"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/cms"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/events"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/marketing"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/onecrm"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/pages"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/passwordless_auth"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/payment_account"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/payment_cash"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/payment_paypal"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/payment_purchase_order"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/payment_stripe"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/utilities"
+        },
+        {
+            "type": "path",
+            "url": "./packages/vektor/shop"
+        }
+    ]
+}

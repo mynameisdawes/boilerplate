@@ -1,0 +1,36 @@
+{
+    "name": "vektor/api",
+    "description": "API",
+    "keywords": [
+        "vektor",
+        "api"
+    ],
+    "homepage": "https://github.com/vektor/api",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Api\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Api\\ApiServiceProvider"
+            ]
+        }
+    }
+}

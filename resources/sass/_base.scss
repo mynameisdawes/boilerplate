@@ -1,0 +1,278 @@
+@use "utilities";
+
+@-webkit-keyframes scaleinout {
+    0% {
+        transform: scale(0);
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes scaleinout {
+    0% {
+        transform: scale(0);
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+/*! purgecss start ignore */
+:where([hidden], [v-cloak], template) {
+    display: none !important;
+}
+
+:where([disabled="true" i], :disabled, .is_disabled) {
+    &:not(.dummy) {
+        opacity: 0.4;
+        cursor: not-allowed !important;
+    }
+}
+
+:where([aria-hidden="true" i] *) {
+    pointer-events: none;
+}
+
+:where(:root) {
+    -webkit-tap-highlight-color: transparent;
+    cursor: default;
+    background-repeat: no-repeat;
+    accent-color: var(--color_accent, inherit);
+    overflow-wrap: break-word;
+    tab-size: 4;
+    text-size-adjust: none;
+}
+
+:root {
+    @include utilities.bp(3) {
+        --block_size_header: 80px;
+        --block_size_header_actions: 50px;
+        --block_size_footer_actions: 50px;
+    }
+    @include utilities.bp(4) {
+        --slider_size: 80px;
+    }
+};
+
+:where(*, ::before, ::after) {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where(*, ::before, ::after) {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+:where(:root) {
+    scroll-padding-top: var(--gutter);
+
+    &:has(.document__header--fixed) {
+        scroll-padding-top: calc(var(--block_size_header_total) + var(--gutter));
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    :where(:root) {
+        scroll-behavior: smooth;
+    }
+}
+
+:where(body) {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    min-block-size: 100vh;
+    min-block-size: 100svh;
+    text-rendering: optimizeSpeed;
+}
+
+::selection {
+    background-color: var(--selection_background);
+    color: var(--selection_color);
+    text-shadow: none;
+    @supports ((background-clip: text) or (-webkit-background-clip: text)) and ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
+        background-image: none;
+        background-clip: initial;
+        -webkit-background-clip: initial;
+        text-fill-color: initial;
+        -webkit-text-fill-color: initial;
+    }
+}
+
+:where(blockquote, dl, dd, hr, figure, pre) {
+    margin: 0;
+}
+
+:where(hr) {
+    border-width: 1px 0 0;
+    height: 0;
+    overflow: visible;
+    color: var(--color_border);
+}
+
+:where(abbr[title]) {
+    text-decoration: underline dotted;
+}
+
+:where(b, strong) {
+    font-weight: bolder;
+}
+
+:where(code, kbd, samp, pre) {
+    font-size: 1em;
+    font-family: var(--font-family_monospace);
+    white-space: pre-wrap;
+}
+
+:where(small) {
+    font-size: 80%;
+}
+
+:where(sub, sup) {
+    position: relative;
+    vertical-align: baseline;
+    font-size: 75%;
+    line-height: 0;
+}
+
+:where(sub) {
+    inset-block-end: -0.25em;
+}
+
+:where(sup) {
+    inset-block-start: -0.5em;
+}
+
+:where(table) {
+    border-color: currentColor;
+    border-collapse: collapse;
+    text-indent: 0;
+}
+
+:where(audio, canvas, embed, iframe, img, figure, object, svg, video) {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+}
+
+:where(audio) {
+    inline-size: 100%;
+}
+
+:where(audio:not([controls])) {
+    display: none;
+}
+
+:where(svg) {
+    overflow: clip;
+}
+
+:where(picture) {
+    display: contents;
+}
+
+:where(source) {
+    display: none;
+}
+
+:where(details, main, caption, figcaption, label, legend) {
+    display: block;
+}
+
+:where(legend) {
+    padding: 0;
+}
+
+:where(label[for]) {
+    cursor: pointer;
+}
+
+:where(progress) {
+    vertical-align: baseline;
+}
+
+:where(details > summary:first-of-type) {
+    display: list-item;
+}
+
+:where(button, input, optgroup, select, textarea) {
+    margin: 0;
+    font-size: 100%;
+    line-height: 1.15;
+    font-family: inherit;
+}
+
+:where(button, select) {
+    text-transform: none;
+}
+
+:where(button, [type="button" i], [type="reset" i], [type="submit" i]) {
+    appearance: button;
+}
+
+:where([type="search" i]) {
+    appearance: textfield;
+    outline-offset: -2px;
+}
+
+:where(textarea) {
+    resize: vertical;
+}
+
+::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
+::-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+
+::-moz-ui-invalid {
+    box-shadow: none;
+}
+
+::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    block-size: auto;
+}
+
+::-webkit-search-decoration {
+    appearance: none;
+}
+
+::-webkit-file-upload-button {
+    appearance: button;
+    font: inherit;
+}
+
+html, html[color-scheme="light" i] {
+    color-scheme: light;
+}
+
+html[color-scheme="dark" i] {
+    color-scheme: dark;
+}
+
+body {
+    background-color: var(--color_background, inherit);
+}
+/*! purgecss end ignore */

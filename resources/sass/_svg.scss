@@ -1,0 +1,5 @@
+@use "utilities";
+
+@include utilities.bps(".fill-current") {
+    fill: currentColor;
+}

@@ -1,0 +1,154 @@
+@use "utilities";
+
+@use "sass:math";
+
+.modal__overlay {
+    @extend %overlay;
+
+    .modal__inner {
+        position: relative;
+        cursor: initial;
+    }
+
+    &.from_top {
+        .modal__dialog {
+            transform: translateY(-100%);
+            margin-block-start: 0;
+            padding-block-start: 0;
+
+            @include utilities.bp("1t2e") {
+                padding-inline-start: 0;
+                padding-inline-end: 0;
+            }
+
+            @include utilities.bp(3) {
+                padding-block-start: 0;
+            }
+        }
+
+        &.is_open {
+            .modal__dialog {
+                transform: translateY(0);
+                transition: var(--transition_duration_fast) calc(var(--transition_duration_fast) / 2) transform var(--transition_easing_cubic);
+            }
+        }
+    }
+
+    &.from_bottom {
+        .modal__dialog {
+            transform: translateY(100%);
+            margin-block-end: 0;
+            padding-block-end: 0;
+
+            @include utilities.bp("1t2e") {
+                padding-inline-end: 0;
+                padding-inline-start: 0;
+            }
+
+            @include utilities.bp(3) {
+                padding-block-end: 0;
+            }
+        }
+
+        &.is_open {
+            .modal__dialog {
+                transform: translateY(0);
+                transition: var(--transition_duration_fast) calc(var(--transition_duration_fast) / 2) transform var(--transition_easing_cubic);
+            }
+        }
+    }
+
+    &.from_left {
+        .modal__dialog {
+            transform: translateX(-100%);
+            margin-inline-start: 0;
+            padding-inline-start: 0;
+
+            @include utilities.bp(3) {
+                padding-inline-start: 0;
+            }
+        }
+
+        &.is_open {
+            .modal__dialog {
+                transform: translateX(0);
+                transition: var(--transition_duration_fast) calc(var(--transition_duration_fast) / 2) transform var(--transition_easing_cubic);
+            }
+        }
+    }
+
+    &.from_right {
+        .modal__dialog {
+            transform: translateX(100%);
+            margin-inline-end: 0;
+            padding-inline-end: 0;
+
+            @include utilities.bp(3) {
+                padding-inline-end: 0;
+            }
+        }
+
+        &.is_open {
+            .modal__dialog {
+                transform: translateX(0);
+                transition: var(--transition_duration_fast) calc(var(--transition_duration_fast) / 2) transform var(--transition_easing_cubic);
+            }
+        }
+    }
+
+    .modal__dialog {
+        position: relative;
+        transform: scale(0);
+        transition: var(--transition_duration_fast) transform var(--transition_easing_cubic);
+        margin: auto;
+        padding: 1rem;
+        min-block-size: calc(320px - 2rem);
+
+        @include utilities.bp(3) {
+            padding: 2rem;
+            min-inline-size: 450px;
+            max-inline-size: 550px;
+        }
+
+        .modal__dismiss {
+            @extend %overlay__dismiss;
+        }
+
+        .modal__content {
+            box-shadow: 0 10px 20px var(--color_dark_transparent);
+            background-color: var(--color_background);
+            padding: 1.6em;
+            inline-size: 100%;
+            max-inline-size: 100%;
+
+            @include utilities.bp(3) {
+                padding: 2em;
+            }
+        }
+
+        .modal__content__after {
+            background-color: var(--color_background);
+        }
+
+        .modal__action {
+            position: sticky;
+            inset-block-end: 0;
+            .btn {
+                border-radius: 0;
+            }
+        }
+    }
+
+    &.is_open {
+        .modal__dialog {
+            transform: scale(1);
+        }
+    }
+}
+
+.modal__cookies {
+    .modal__dialog {
+        inline-size: 900px;
+        max-inline-size: 85%;
+    }
+}

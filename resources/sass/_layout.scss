@@ -1,0 +1,871 @@
+@use "utilities";
+@use "variables";
+
+@use "sass:math";
+
+/*! purgecss start ignore */
+:root {
+    --block_size_header_total: 0;
+    &:has(.document__header--absolute, .document__header--fixed) {
+        --block_size_header_total: var(--block_size_header);
+        &:has(.document__header__actions) {
+            --block_size_header_total: calc(var(--block_size_header) + var(--block_size_header_actions));
+        }
+    }
+}
+
+:focus,
+:focus-visible,
+:active {
+    outline-color: var(--color_primary);
+}
+
+.document__navigation_strip {
+    display: grid;
+    align-items: center;
+    box-shadow: 0 2px 6px var(--color_dark_transparent);
+    background-color: var(--color_header_background);
+    block-size: var(--block_size_header);
+    color: var(--color_header_text);
+}
+
+.document__header {
+    position: relative;
+    z-index: 1001;
+    pointer-events: all;
+
+    .document__slider {
+        z-index: -1;
+        inset-block-start: var(--block_size_header);
+    }
+
+    &.document__header--absolute,
+    &.document__header--fixed {
+        inset-block-start: 0;
+        inline-size: 100%;
+    }
+
+    &.document__header--absolute {
+        position: absolute;
+    }
+
+    &.document__header--fixed {
+        position: fixed;
+    }
+}
+
+.document__header--fixed.document__header--transparent {
+    .document__navigation_strip {
+        transition: var(--transition_duration_fast) background-color ease, var(--transition_duration_fast) box-shadow ease;
+        &.scrolled_to_top:not(:has(.document__slider.is_open)) {
+            @include utilities.bp('3') {
+                box-shadow: 0 2px 6px var(--color_transparent);
+                background-color: var(--color_transparent);
+            }
+        }
+    }
+    &:has(.document__slider--r), &:has(.document__slider--sm) {
+        .document__navigation_strip {
+            &.scrolled_to_top:not(:has(.document__slider.is_open)) {
+                box-shadow: 0 2px 6px var(--color_transparent);
+                background-color: var(--color_transparent);
+            }
+        }
+    }
+}
+
+:root:has(.document__header--transparent_light .scrolled_to_top .document__slider--r, .document__header--transparent_light .scrolled_to_top .document__slider--lg) {
+    @include utilities.bp('3') {
+        --color_header_text: var(--color_background_contrasting);
+    }
+}
+
+:root:has(.document__header--transparent_light .scrolled_to_top .document__slider--sm:not(:has(.document__slider.is_open))) {
+    @include utilities.bp('3') {
+        --color_header_text: var(--color_background_contrasting);
+    }
+}
+
+:root:has(.document__header--transparent_light .scrolled_to_top .document__slider--r:not(.document__slider.is_open)) {
+    --color_header_text: var(--color_background_contrasting);
+    .document__slider--r {
+        @include utilities.bp('1t2e') {
+            color: var(--color_text);
+        }
+    }
+}
+
+:root:has(.document__header--transparent_light .scrolled_to_top .document__slider--sm:not(.document__slider.is_open)) {
+    --color_header_text: var(--color_background_contrasting);
+    .document__slider--sm {
+        @include utilities.bp('1t2e') {
+            color: var(--color_text);
+        }
+    }
+}
+
+:root:has(.document__header--transparent_dark .scrolled_to_top .document__slider--r, .document__header--transparent_dark .scrolled_to_top .document__slider--lg) {
+    @include utilities.bp('3') {
+        --color_header_text: var(--color_background);
+    }
+}
+
+:root:has(.document__header--transparent_dark .scrolled_to_top .document__slider--sm:not(:has(.document__slider.is_open))) {
+    @include utilities.bp('3') {
+        --color_header_text: var(--color_background);
+    }
+}
+
+:root:has(.document__header--transparent_dark .scrolled_to_top .document__slider--r:not(.document__slider.is_open)) {
+    --color_header_text: var(--color_background);
+    .document__slider--r {
+        @include utilities.bp('1t2e') {
+            color: var(--color_text);
+        }
+    }
+}
+
+:root:has(.document__header--transparent_dark .scrolled_to_top .document__slider--sm:not(.document__slider.is_open)) {
+    --color_header_text: var(--color_background);
+    .document__slider--sm {
+        @include utilities.bp('1t2e') {
+            color: var(--color_text);
+        }
+    }
+}
+/*! purgecss end ignore */
+
+.document__logo {
+    display: inline-flex;
+    align-items: center;
+    min-inline-size: 90px;
+    block-size: var(--block_size_header_content);
+
+    a {
+        display: block;
+    }
+
+    img {
+        max-block-size: var(--block_size_header_content);
+    }
+
+    .content:has(&) {
+        z-index: 1003;
+    }
+}
+
+.document__footer {
+    .footer__content__wrapper {
+        display: grid;
+        gap: 0.6rem;
+        padding-block-start: 0.8em;
+        padding-block-end: 0.8em;
+
+        @include utilities.cbp(640px) {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    .footer__content {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.document__header__actions {
+    position: fixed;
+    z-index: 1000;
+    inset-block-start: var(--block_size_header);
+    inset-inline-start: 0;
+    inline-size: 100%;
+    .document__navigation_strip {
+        background-color: var(--color_background);
+        block-size: var(--block_size_header_actions);
+        white-space: nowrap;
+        @include utilities.scroll_x;
+    }
+}
+
+.document__footer__actions {
+    position: fixed;
+    z-index: 1000;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: 100%;
+    .document__navigation_strip {
+        box-shadow: 0 -2px 6px var(--color_dark_transparent);
+        background-color: var(--color_background);
+        block-size: var(--block_size_footer_actions);
+    }
+}
+
+.document__wrapper {
+    &:has(.document__header--absolute, .document__header--fixed) {
+        .document__content {
+            & > *:first-child {
+                --_padding_compensation: var(--block_size_header_total);
+                * {
+                    --_padding_compensation: 0px;
+                }
+            }
+        }
+
+        &:has(.document__header__actions) {
+            .document__header--absolute, .document__header--fixed {
+                .document__navigation_strip {
+                    box-shadow: 0 1px 0 0 color-mix(in lab, var(--color_border), transparent 30%);
+                }
+            }
+        }
+    }
+    &:has(.document__footer__actions) {
+        padding-block-end: var(--block_size_footer_actions);
+    }
+}
+
+@include utilities.bps(".document__wrapper--splash") {
+    background-size: cover;
+}
+
+@include utilities.bps(".document__content--center") {
+    margin-block: auto;
+}
+
+@include utilities.bps(".document__footer--fixed") {
+    margin-block-start: auto;
+
+    .document__wrapper:has(&) {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        min-block-size: 100svh;
+    }
+}
+
+.content__wrapper {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 12px;
+}
+
+.content {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expand__trigger {
+    position: relative;
+
+    &:before {
+        position: absolute;
+        z-index: -1;
+        transition: transform 0.3s ease;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        background-image: url("../assets/img/icons/icon__expand.svg");
+        background-position: center;
+        background-size: 19px;
+        background-repeat: no-repeat;
+        inline-size: 19px;
+        block-size: 100%;
+        content: "";
+    }
+
+    &.expand__trigger--expanded:before {
+        transform: scaleY(-1);
+    }
+}
+
+.expand__panel {
+    display: grid;
+    position: relative;
+    grid-template-rows: 1fr;
+    transition: var(--transition_duration_normal) grid-template-rows var(--transition_easing_cubic);
+    will-change: grid-template-rows;
+    overflow: hidden;
+
+    &.is_collapsed {
+        grid-template-rows: 0fr;
+    }
+
+    &:not(.expand__panel--no_inner) {
+        &:after {
+            position: absolute;
+            inset-block-start: 100%;
+            box-shadow: 0 0 5px 2px var(--color_dark_transparent);
+            inline-size: 100%;
+            block-size: 1px;
+            content: "";
+        }
+
+        .expand__panel--inner {
+            box-shadow: inset 0 6px 5px -4px var(--color_dark_transparent);
+            border-width: 1px;
+            border-style: solid;
+            border-color: var(--color_border);
+            border-inline-start-width: 0;
+            border-inline-end-width: 0;
+            padding: 2em;
+        }
+    }
+
+    .expand__panel--outer {
+        overflow: hidden;
+    }
+
+    .rounded-box.p-8 &,
+    .border-box.p-8 &,
+    .shadow-box.p-8 & {
+        margin-inline-start: -2rem;
+        margin-inline-end: -2rem;
+    }
+}
+
+.rounded-box {
+    border-radius: var(--rounded_sm);
+    inline-size: 100%;
+}
+
+.border-box {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color_border);
+    border-radius: var(--rounded_sm);
+    inline-size: 100%;
+}
+
+.shadow-box {
+    box-shadow: 0 5px 8px var(--color_dark_transparent);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color_border);
+    border-radius: var(--rounded_sm);
+    inline-size: 100%;
+}
+
+.collection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    &.toolbar {
+        @include utilities.scroll_x;
+        flex-wrap: nowrap;
+        gap: 0;
+        & > * {
+            flex-shrink: 0;
+        }
+        .btn {
+            &:not(:first-child):not(:last-child) {
+                border-radius: 0;
+            }
+
+            &:first-child {
+                border-start-end-radius: 0;
+                border-end-end-radius: 0;
+            }
+
+            &:last-child {
+                border-start-start-radius: 0;
+                border-end-start-radius: 0;
+            }
+
+            &:not(:last-child) {
+                border-inline-end-width: 0;
+            }
+        }
+    }
+
+    &.metadata {
+        gap: 0.5rem 1rem;
+        @extend %el__spacing;
+
+        & > *:not(:last-child) {
+            position: relative;
+            &::after {
+                position: absolute;
+                margin-inline-start: 0.5rem;
+                inset-block-start: 0;
+                inset-inline-start: 100%;
+                border-inline-end-width: 1px;
+                border-inline-end-style: solid;
+                border-inline-end-color: var(--color_background__accent);
+                block-size: 100%;
+                content: "";
+            }
+        }
+    }
+}
+
+.spinner__wrapper {
+    position: fixed;
+    opacity: 0;
+    z-index: 10000;
+    transition: left 0s 0.3s ease, right 0s 0.3s ease, opacity 0.3s ease;
+    inset-block-end: 0;
+    inset-block-start: 0;
+    inset-inline-end: 100%;
+    inset-inline-start: -100%;
+    pointer-events: none;
+
+    &::before {
+        position: absolute;
+        opacity: 0.6;
+        inset-block-end: 0;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        background-color: var(--color_background);
+        content: "";
+    }
+
+    &.is_loading {
+        opacity: 1;
+        transition: left 0s ease, right 0s ease, opacity 0.3s ease;
+        cursor: wait;
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        pointer-events: auto;
+    }
+
+    &.spinner--absolute {
+        position: absolute;
+        z-index: 101;
+    }
+}
+
+.spinner {
+    position: absolute;
+    animation: scaleinout 1s infinite ease-in-out;
+    margin-inline-start: -30px;
+    margin-block-start: -30px;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    border-radius: var(--infinity);
+    background-color: var(--color_primary);
+    inline-size: 60px;
+    block-size: 60px;
+}
+
+.badge, .badge\:sm, .badge\:xs {
+    display: grid;
+    place-content: center;
+    transition: 0.25s ease background-color, 0.25s ease border-color,
+        0.25s ease color, 0.25s ease box-shadow, 0.25s ease transform;
+    cursor: default;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color_border);
+    border-radius: var(--rounded_lg);
+    background-color: transparent;
+    padding-inline-start: 0.6rem;
+    padding-inline-end: 0.6rem;
+    padding-block-start: 0.6rem;
+    padding-block-end: 0.5rem;
+    inline-size: fit-content;
+    color: currentColor;
+    font-weight: bold;
+    font-size: 0.7rem;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+a {
+    &.badge, &.badge\:sm, &.badge\:xs {
+        cursor: pointer;
+    }
+}
+
+.badge\:sm {
+    font-size: 0.65rem;
+}
+
+.badge\:xs {
+    padding-inline-start: 0.5rem;
+    padding-inline-end: 0.5rem;
+    padding-block-start: 0.25rem;
+    padding-block-end: 0.22rem;
+    font-size: 0.6rem;
+}
+
+/*! purgecss start ignore */
+:root {
+    --gutter: var(--spacing_4);
+    @include utilities.bp(2) {
+        --gutter: var(--spacing_8);
+    }
+
+    @include utilities.bp('3') {
+        --gutter: var(--spacing_12);
+    }
+
+    @include utilities.bp(4) {
+        --gutter: var(--spacing_16);
+    }
+}
+
+@each $size, $max_width in variables.$container_sizes {
+    @include utilities.bps(".container\\:#{$size}", variables.$breakpoints_all) {
+        display: grid;
+        grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--container_#{$size}) - (2 * var(--gutter)))) minmax(var(--gutter), 1fr);
+        inline-size: auto;
+
+        &>* {
+            grid-column-start: 2;
+
+            html:not([color-scheme="dark" i]) &.text-gradient {
+                inline-size: max-content;
+            }
+        }
+    }
+}
+
+@include utilities.bps(".container-gutter") {
+    display: grid;
+    gap: var(--gutter);
+    padding-block-start: calc(var(--gutter) + var(--_padding_compensation, 0px));
+    padding-block-end: var(--gutter);
+}
+
+@include utilities.bps(".container-gutter\\:outer") {
+    padding-block-start: calc(var(--gutter) + var(--_padding_compensation, 0px));
+    padding-block-end: var(--gutter);
+}
+
+@include utilities.bps(".container-gutter\\:inner") {
+    display: grid;
+    gap: var(--gutter);
+    reading-flow: grid-columns;
+}
+/*! purgecss end ignore */
+
+@include utilities.bps(".edgeless", variables.$breakpoints_all) {
+    grid-column: 1 / span 3;
+}
+
+@include utilities.bps(".block") {
+    display: block;
+}
+
+@include utilities.bps(".inline-block") {
+    display: inline-block;
+}
+
+@include utilities.bps(".inline") {
+    display: inline;
+}
+
+@include utilities.bps(".flex") {
+    display: flex;
+}
+
+@include utilities.bps(".inline-flex") {
+    display: inline-flex;
+}
+
+@include utilities.bps(".table") {
+    display: table;
+}
+
+@include utilities.bps(".table-caption") {
+    display: table-caption;
+}
+
+@include utilities.bps(".table-cell") {
+    display: table-cell;
+}
+
+@include utilities.bps(".table-column") {
+    display: table-column;
+}
+
+@include utilities.bps(".table-column-group") {
+    display: table-column-group;
+}
+
+@include utilities.bps(".table-footer-group") {
+    display: table-footer-group;
+}
+
+@include utilities.bps(".table-header-group") {
+    display: table-header-group;
+}
+
+@include utilities.bps(".table-row-group") {
+    display: table-row-group;
+}
+
+@include utilities.bps(".table-row") {
+    display: table-row;
+}
+
+@include utilities.bps(".flow-root") {
+    display: flow-root;
+}
+
+@include utilities.bps(".grid") {
+    display: grid;
+}
+
+@include utilities.bps(".inline-grid") {
+    display: inline-grid;
+}
+
+@include utilities.bps(".contents") {
+    display: contents;
+}
+
+@include utilities.bps(".hidden") {
+    display: none !important;
+}
+
+@include utilities.bps(".float-right") {
+    float: right;
+}
+
+@include utilities.bps(".float-left") {
+    float: left;
+}
+
+@include utilities.bps(".float-none") {
+    float: none;
+}
+
+@include utilities.bps(".clear-left") {
+    clear: left;
+}
+
+@include utilities.bps(".clear-right") {
+    clear: right;
+}
+
+@include utilities.bps(".clear-both") {
+    clear: both;
+}
+
+@include utilities.bps(".clear-none") {
+    clear: none;
+}
+
+@include utilities.bps(".object-contain") {
+    object-fit: contain;
+}
+
+@include utilities.bps(".object-cover") {
+    object-fit: cover;
+}
+
+@include utilities.bps(".object-fill") {
+    object-fit: fill;
+}
+
+@include utilities.bps(".object-none") {
+    object-fit: none;
+}
+
+@include utilities.bps(".object-scale-down") {
+    object-fit: scale-down;
+}
+
+@include utilities.bps(".object-bottom") {
+    object-position: bottom;
+}
+
+@include utilities.bps(".object-center") {
+    object-position: center;
+}
+
+@include utilities.bps(".object-left") {
+    object-position: left;
+}
+
+@include utilities.bps(".object-left-bottom") {
+    object-position: left bottom;
+}
+
+@include utilities.bps(".object-left-top") {
+    object-position: left top;
+}
+
+@include utilities.bps(".object-right") {
+    object-position: right;
+}
+
+@include utilities.bps(".object-right-bottom") {
+    object-position: right bottom;
+}
+
+@include utilities.bps(".object-right-top") {
+    object-position: right top;
+}
+
+@include utilities.bps(".object-top") {
+    object-position: top;
+}
+
+@include utilities.bps(".overflow-auto") {
+    overflow: auto;
+}
+
+@include utilities.bps(".overflow-clip") {
+    overflow: clip;
+}
+
+@include utilities.bps(".overflow-hidden") {
+    overflow: hidden;
+}
+
+@include utilities.bps(".overflow-visible") {
+    overflow: visible;
+}
+
+@include utilities.bps(".overflow-scroll") {
+    overflow: scroll;
+}
+
+@include utilities.bps(".overflow-x-auto") {
+    overflow-x: auto;
+}
+
+@include utilities.bps(".overflow-y-auto") {
+    overflow-y: auto;
+}
+
+@include utilities.bps(".overflow-x-hidden") {
+    overflow-x: hidden;
+}
+
+@include utilities.bps(".overflow-y-hidden") {
+    overflow-y: hidden;
+}
+
+@include utilities.bps(".overflow-x-visible") {
+    overflow-x: visible;
+}
+
+@include utilities.bps(".overflow-y-visible") {
+    overflow-y: visible;
+}
+
+@include utilities.bps(".overflow-x-scroll") {
+    overflow-x: scroll;
+}
+
+@include utilities.bps(".overflow-y-scroll") {
+    overflow-y: scroll;
+}
+
+@include utilities.bps(".overscroll-auto") {
+    overscroll-behavior: auto;
+}
+
+@include utilities.bps(".overscroll-contain") {
+    overscroll-behavior: contain;
+}
+
+@include utilities.bps(".overscroll-none") {
+    overscroll-behavior: none;
+}
+
+@include utilities.bps(".overscroll-y-auto") {
+    overscroll-behavior-y: auto;
+}
+
+@include utilities.bps(".overscroll-y-contain") {
+    overscroll-behavior-y: contain;
+}
+
+@include utilities.bps(".overscroll-y-none") {
+    overscroll-behavior-y: none;
+}
+
+@include utilities.bps(".overscroll-x-auto") {
+    overscroll-behavior-x: auto;
+}
+
+@include utilities.bps(".overscroll-x-contain") {
+    overscroll-behavior-x: contain;
+}
+
+@include utilities.bps(".overscroll-x-none") {
+    overscroll-behavior-x: none;
+}
+
+@include utilities.bps(".static") {
+    position: static;
+}
+
+@include utilities.bps(".fixed") {
+    position: fixed;
+}
+
+@include utilities.bps(".absolute") {
+    position: absolute;
+}
+
+@include utilities.bps(".relative") {
+    position: relative;
+}
+
+@include utilities.bps(".sticky") {
+    position: sticky;
+}
+
+@include utilities.bps(".top-0") {
+    inset-block-start: 0;
+}
+
+@include utilities.bps(".right-0") {
+    inset-inline-end: 0;
+}
+
+@include utilities.bps(".bottom-0") {
+    inset-block-end: 0;
+}
+
+@include utilities.bps(".left-0") {
+    inset-inline-start: 0;
+}
+
+@include utilities.bps(".visible") {
+    visibility: visible;
+}
+
+@include utilities.bps(".invisible") {
+    visibility: hidden;
+}
+
+@include utilities.bps(".z-0") {
+    z-index: 0;
+}
+
+@include utilities.bps(".z-10") {
+    z-index: 10;
+}
+
+@include utilities.bps(".z-20") {
+    z-index: 20;
+}
+
+@include utilities.bps(".z-30") {
+    z-index: 30;
+}
+
+@include utilities.bps(".z-40") {
+    z-index: 40;
+}
+
+@include utilities.bps(".z-50") {
+    z-index: 50;
+}
+
+@include utilities.bps(".z-auto") {
+    z-index: auto;
+}

@@ -1,0 +1,197 @@
+@use "utilities";
+
+@include utilities.bps(".justify-start") {
+    justify-content: flex-start;
+}
+
+@include utilities.bps(".justify-end") {
+    justify-content: flex-end;
+}
+
+@include utilities.bps(".justify-center") {
+    justify-content: center;
+}
+
+@include utilities.bps(".justify-between") {
+    justify-content: space-between;
+}
+
+@include utilities.bps(".justify-around") {
+    justify-content: space-around;
+}
+
+@include utilities.bps(".justify-evenly") {
+    justify-content: space-evenly;
+}
+
+@include utilities.bps(".justify-items-auto") {
+    justify-items: auto;
+}
+
+@include utilities.bps(".justify-items-start") {
+    justify-items: start;
+}
+
+@include utilities.bps(".justify-items-end") {
+    justify-items: end;
+}
+
+@include utilities.bps(".justify-items-center") {
+    justify-items: center;
+}
+
+@include utilities.bps(".justify-items-stretch") {
+    justify-items: stretch;
+}
+
+@include utilities.bps(".justify-self-auto") {
+    justify-self: auto;
+}
+
+@include utilities.bps(".justify-self-start") {
+    justify-self: start;
+}
+
+@include utilities.bps(".justify-self-end") {
+    justify-self: end;
+}
+
+@include utilities.bps(".justify-self-center") {
+    justify-self: center;
+}
+
+@include utilities.bps(".justify-self-stretch") {
+    justify-self: stretch;
+}
+
+@include utilities.bps(".content-center") {
+    align-content: center;
+}
+
+@include utilities.bps(".content-start") {
+    align-content: flex-start;
+}
+
+@include utilities.bps(".content-end") {
+    align-content: flex-end;
+}
+
+@include utilities.bps(".content-between") {
+    align-content: space-between;
+}
+
+@include utilities.bps(".content-around") {
+    align-content: space-around;
+}
+
+@include utilities.bps(".content-evenly") {
+    align-content: space-evenly;
+}
+
+@include utilities.bps(".items-start") {
+    align-items: flex-start;
+}
+
+@include utilities.bps(".items-end") {
+    align-items: flex-end;
+}
+
+@include utilities.bps(".items-center") {
+    align-items: center;
+}
+
+@include utilities.bps(".items-baseline") {
+    align-items: baseline;
+}
+
+@include utilities.bps(".items-stretch") {
+    align-items: stretch;
+}
+
+@include utilities.bps(".self-auto") {
+    align-self: auto;
+}
+
+@include utilities.bps(".self-start") {
+    align-self: flex-start;
+}
+
+@include utilities.bps(".self-end") {
+    align-self: flex-end;
+}
+
+@include utilities.bps(".self-center") {
+    align-self: center;
+}
+
+@include utilities.bps(".self-stretch") {
+    align-self: stretch;
+}
+
+@include utilities.bps(".place-content-center") {
+    place-content: center;
+}
+
+@include utilities.bps(".place-content-start") {
+    place-content: start;
+}
+
+@include utilities.bps(".place-content-end") {
+    place-content: end;
+}
+
+@include utilities.bps(".place-content-between") {
+    place-content: space-between;
+}
+
+@include utilities.bps(".place-content-around") {
+    place-content: space-around;
+}
+
+@include utilities.bps(".place-content-evenly") {
+    place-content: space-evenly;
+}
+
+@include utilities.bps(".place-content-stretch") {
+    place-content: stretch;
+}
+
+@include utilities.bps(".place-items-auto") {
+    place-items: auto;
+}
+
+@include utilities.bps(".place-items-start") {
+    place-items: start;
+}
+
+@include utilities.bps(".place-items-end") {
+    place-items: end;
+}
+
+@include utilities.bps(".place-items-center") {
+    place-items: center;
+}
+
+@include utilities.bps(".place-items-stretch") {
+    place-items: stretch;
+}
+
+@include utilities.bps(".place-self-auto") {
+    place-self: auto;
+}
+
+@include utilities.bps(".place-self-start") {
+    place-self: start;
+}
+
+@include utilities.bps(".place-self-end") {
+    place-self: end;
+}
+
+@include utilities.bps(".place-self-center") {
+    place-self: center;
+}
+
+@include utilities.bps(".place-self-stretch") {
+    place-self: stretch;
+}

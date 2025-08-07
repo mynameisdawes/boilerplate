@@ -1,0 +1,37 @@
+{
+    "name": "vektor/stripe",
+    "description": "Stripe",
+    "keywords": [
+        "vektor",
+        "stripe"
+    ],
+    "homepage": "https://github.com/vektor/stripe",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "stripe/stripe-php": "10.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Stripe\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Stripe\\StripeServiceProvider"
+            ]
+        }
+    }
+}

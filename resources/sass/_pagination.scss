@@ -1,0 +1,102 @@
+@use "utilities";
+
+:root {
+    --swiper-theme-color: var(--color_secondary);
+    --swiper-pagination-bullet-inactive-color: var(--color_border);
+    --swiper-pagination-bullet-inactive-opacity: 1;
+    --swiper-pagination-top: 0;
+    --swiper-pagination-bottom: 0;
+    --swiper-pagination-bullet-width: 10px;
+    --swiper-pagination-bullet-height: 10px;
+    --swiper-pagination-bullet-horizontal-gap: 6px;
+}
+
+.swiper-pagination {
+    position: relative;
+    margin-block-start: 1rem;
+    line-height: 0;
+}
+
+.pagination {
+    display: grid;
+    position: relative;
+    justify-content: center;
+    gap: 10px;
+    margin-block-start: 30px;
+    border-block-start-width: 1px;
+    border-block-start-style: solid;
+    border-color: var(--color_border);
+    border-block-start-color: var(--color_border);
+    background-color: var(--color_background);
+    padding-block-start: 15px;
+    text-align: center;
+
+    @include utilities.cbp(500px) {
+        grid-template-columns: max-content max-content;
+        justify-content: space-between;
+    }
+
+    .pagination__pages, .pagination__per_page {
+        select {
+            margin-block-end: 0;
+            padding-block: 0;
+            padding-inline: 10px;
+            inline-size: 70px;
+            block-size: 34px;
+            min-block-size: 34px;
+            line-height: 34px;
+        }
+    }
+
+    .pagination__pages {
+        block-size: 34px;
+        line-height: 34px;
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 0 10px;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 0 10px;
+
+            a {
+                display: block;
+                transition: background-color 0.3s ease;
+                border-width: 1px;
+                border-style: solid;
+                border-color: var(--color_border);
+                background-color: transparent;
+                padding-block: 0;
+                padding-inline: 10px;
+                block-size: 34px;
+                line-height: 34px;
+                text-decoration: none;
+
+                &:hover {
+                    background-color: var(--color_background__field);
+                }
+            }
+        }
+    }
+
+    .pagination__per_page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0 10px;
+
+        span {
+            display: block;
+        }
+    }
+}

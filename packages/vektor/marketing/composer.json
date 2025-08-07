@@ -1,0 +1,37 @@
+{
+    "name": "vektor/marketing",
+    "description": "API",
+    "keywords": [
+        "vektor",
+        "marketing"
+    ],
+    "homepage": "https://github.com/vektor/marketing",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "mailchimp/marketing": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Marketing\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Marketing\\MarketingServiceProvider"
+            ]
+        }
+    }
+}

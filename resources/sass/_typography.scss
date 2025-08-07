@@ -1,0 +1,578 @@
+@use "colors";
+@use "utilities";
+@use "variables";
+
+@use "sass:math";
+
+:root {
+    --font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+body {
+    color: var(--color_text, inherit);
+    font-size: var(--font-size, inherit);
+    font-family: var(--font-family, inherit);
+    line-height: normal;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+    text-wrap: balance;
+    font-weight: inherit;
+    font-size: inherit;
+    display: block;
+    @extend %el__spacing;
+    margin-block-start: var(--spacing_8);
+    font-weight: normal;
+
+    .message--top + & {
+        margin-block-start: 0;
+    }
+}
+
+h1,
+.h1 {
+    font-weight: 600;
+    font-size: 2em;
+    letter-spacing: -0.03em;
+
+    @include utilities.bp(3) {
+        font-size: 2.4em;
+    }
+}
+
+h2,
+.h2 {
+    font-weight: 600;
+    font-size: 1.7em;
+
+    @include utilities.bp(3) {
+        font-size: 2em;
+    }
+}
+
+h3,
+.h3 {
+    font-weight: 600;
+    font-size: 1.5em;
+
+    @include utilities.bp(3) {
+        font-size: 1.55em;
+    }
+}
+
+h4,
+.h4 {
+    font-size: 1.4em;
+
+    @include utilities.bp(3) {
+        font-size: 1.45em;
+    }
+}
+
+h5,
+.h5 {
+    font-size: 1.2em;
+
+    @include utilities.bp(3) {
+        font-size: 1.3em;
+    }
+}
+
+h6,
+.h6 {
+    font-size: 1, 1em;
+
+    @include utilities.bp(3) {
+        font-size: 1.2em;
+    }
+}
+
+p {
+    text-wrap: pretty;
+    max-inline-size: 66ch;
+    @extend %el__spacing;
+    line-height: 1.5;
+}
+
+a {
+    cursor: pointer;
+    color: currentColor;
+    text-decoration: underline;
+    text-decoration-skip-ink: auto;
+}
+
+ul,
+ol {
+    list-style: none;
+    padding: 0;
+    @extend %el__spacing;
+    line-height: 1.5;
+}
+
+li {
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-block-end: calc(var(--spacing_4) / 2);
+    margin-inline-start: 0;
+
+    &:last-child {
+        margin-block-end: 0;
+    }
+}
+
+blockquote {
+    margin-inline-end: 0;
+    margin-inline-start: var(--spacing_4);
+    border-inline-start-width: 5px;
+    border-inline-start-style: solid;
+    border-inline-start-color: var(--color_background__accent);
+    padding-block: 5px;
+    padding-inline-start: 15px;
+    padding-inline-end: 0;
+    font-size: 1.1em;
+    @extend %el__spacing;
+
+    @include utilities.bp(3) {
+        margin-block-start: calc(var(--spacing_4) * 2);
+        margin-block-end: calc(var(--spacing_4) * 2);
+        margin-inline-start: calc(var(--spacing_4) * 2);
+
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+
+    cite {
+        display: block;
+        margin-block-start: 0.5em;
+        font-style: italic;
+        font-size: 0.9em;
+
+        &::before {
+            margin-inline-end: 5px;
+            content: "-";
+        }
+    }
+}
+
+.alignleft {
+    @include utilities.bp(3) {
+        float: left;
+        margin-inline-end: 3rem;
+    }
+}
+
+.alignright {
+    @include utilities.bp(3) {
+        float: right;
+        margin-inline-start: 3rem;
+    }
+}
+
+.aligncenter {
+    display: block;
+    margin-inline-end: auto;
+    margin-inline-start: auto;
+}
+
+img.alignleft {
+    @include utilities.bp(3) {
+        margin-block-start: 0;
+        margin-inline-start: 0;
+    }
+
+    @include utilities.bp(4) {
+        margin-block-start: 1rem;
+        margin-block-end: 1rem;
+
+        &:first-child {
+            margin-block-start: 0;
+        }
+
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+}
+
+img.alignright {
+    @include utilities.bp(3) {
+        margin-block-start: 0;
+        margin-inline-end: 0;
+    }
+
+    @include utilities.bp(4) {
+        margin-block-start: 1rem;
+        margin-block-end: 1rem;
+
+        &:first-child {
+            margin-block-start: 0;
+        }
+
+        &:last-child {
+            margin-block-end: 0;
+        }
+    }
+}
+
+img.aligncenter {
+    @include utilities.bp(4) {
+        margin-block-start: 1rem;
+        margin-block-end: 1rem;
+    }
+}
+
+.article_header {
+    margin-block-end: var(--spacing_6);
+    @include utilities.bp(4) {
+        margin-block-end: var(--spacing_8);
+    }
+}
+
+.article {
+    ul, ol {
+        list-style: revert;
+        padding: revert;
+    }
+
+    ul {
+        overflow: auto;
+    }
+
+    p {
+        max-inline-size: none;
+    }
+
+    img {
+        @extend %el__spacing;
+    }
+
+    a {
+        color: var(--color_primary);
+        .text-white & {
+            color: currentColor;
+        }
+    }
+
+    &.article--overflow {
+        img.alignleft {
+            @include utilities.bp(3) {
+                margin-inline-end: 2rem;
+            }
+
+            @include utilities.bp(4) {
+                margin-block-start: 1.6rem;
+                margin-inline-end: 2.6rem;
+                margin-block-end: 1.6rem;
+                margin-inline-start: -3rem;
+
+                &:first-child {
+                    margin-block-start: 0;
+                }
+
+                &:last-child {
+                    margin-block-end: 0;
+                }
+            }
+        }
+
+        img.alignright {
+            @include utilities.bp(3) {
+                margin-inline-start: 2rem;
+            }
+
+            @include utilities.bp(4) {
+                margin-block-start: 1.6rem;
+                margin-inline-end: -3rem;
+                margin-block-end: 1.6rem;
+                margin-inline-start: 2.6rem;
+
+                &:first-child {
+                    margin-block-start: 0;
+                }
+
+                &:last-child {
+                    margin-block-end: 0;
+                }
+            }
+        }
+
+        img.aligncenter {
+            @include utilities.bp(4) {
+                margin-block-start: 1.6rem;
+                margin-block-end: 1.6rem;
+            }
+        }
+    }
+}
+
+@supports ((background-clip: text) or (-webkit-background-clip: text)) and ((text-fill-color: transparent) or (-webkit-text-fill-color: transparent)) {
+    html:not([color-scheme="dark" i]) {
+        .text-gradient {
+            inline-size: fit-content;
+            background-size: cover;
+            background-clip: text;
+            -webkit-background-clip: text;
+            text-fill-color: transparent;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, var(--color_primary_dark), var(--color_primary) 60%);
+        }
+    }
+}
+
+@include utilities.bps(".text-xs") {
+    font-size: 0.75rem;
+    line-height: 1rem;
+}
+
+@include utilities.bps(".text-sm") {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+@include utilities.bps(".text-base") {
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+@include utilities.bps(".text-lg") {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+@include utilities.bps(".text-xl") {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+@include utilities.bps(".text-2xl") {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+@include utilities.bps(".text-3xl") {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
+
+@include utilities.bps(".text-4xl") {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+
+@include utilities.bps(".text-5xl") {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+@include utilities.bps(".text-6xl") {
+    font-size: 3.75rem;
+    line-height: 1;
+}
+
+@include utilities.bps(".text-7xl") {
+    font-size: 4.5rem;
+    line-height: 1;
+}
+
+@include utilities.bps(".text-8xl") {
+    font-size: 6rem;
+    line-height: 1;
+}
+
+@include utilities.bps(".text-9xl") {
+    font-size: 8rem;
+    line-height: 1;
+}
+
+@include utilities.bps(".italic") {
+    font-style: italic;
+}
+
+@include utilities.bps(".not-italic") {
+    font-style: normal;
+}
+
+@include utilities.bps(".font-thin") {
+    font-weight: 100;
+}
+
+@include utilities.bps(".font-extralight") {
+    font-weight: 200;
+}
+
+@include utilities.bps(".font-light") {
+    font-weight: 300;
+}
+
+@include utilities.bps(".font-normal") {
+    font-weight: 400;
+}
+
+@include utilities.bps(".font-medium") {
+    font-weight: 500;
+}
+
+@include utilities.bps(".font-semibold") {
+    font-weight: 600;
+}
+
+@include utilities.bps(".font-bold") {
+    font-weight: 700;
+}
+
+@include utilities.bps(".font-extrabold") {
+    font-weight: 800;
+}
+
+@include utilities.bps(".font-black") {
+    font-weight: 900;
+}
+
+@include utilities.bps(".normal-nums") {
+    font-variant-numeric: normal;
+}
+
+@include utilities.bps(".ordinal") {
+    font-variant-numeric: ordinal;
+}
+
+@include utilities.bps(".slashed-zero") {
+    font-variant-numeric: slashed-zero;
+}
+
+@include utilities.bps(".lining-nums") {
+    font-variant-numeric: lining-nums;
+}
+
+@include utilities.bps(".oldstyle-nums") {
+    font-variant-numeric: oldstyle-nums;
+}
+
+@include utilities.bps(".proportional-nums") {
+    font-variant-numeric: proportional-nums;
+}
+
+@include utilities.bps(".tabular-nums") {
+    font-variant-numeric: tabular-nums;
+}
+
+@include utilities.bps(".diagonal-fractions") {
+    font-variant-numeric: diagonal-fractions;
+}
+
+@include utilities.bps(".stacked-fractions") {
+    font-variant-numeric: stacked-fractions;
+}
+
+@include utilities.bps(".list-none") {
+    list-style-type: none;
+}
+
+@include utilities.bps(".list-disc") {
+    list-style-type: disc;
+}
+
+@include utilities.bps(".list-decimal") {
+    list-style-type: decimal;
+}
+
+@include utilities.bps(".list-inside") {
+    list-style-position: inside;
+}
+
+@include utilities.bps(".list-outside") {
+    list-style-position: outside;
+}
+
+@include utilities.bps(".text-left") {
+    text-align: left;
+}
+
+@include utilities.bps(".text-center") {
+    text-align: center;
+}
+
+@include utilities.bps(".text-right") {
+    text-align: right;
+}
+
+@include utilities.bps(".text-justify") {
+    text-align: justify;
+}
+
+@include utilities.bps(".text-balance") {
+    text-wrap: balance;
+}
+
+@include utilities.bps(".text-pretty") {
+    text-wrap: pretty;
+}
+
+@include colors.apply_color_to_property("text", "color");
+
+@include utilities.bps(".underline") {
+    text-decoration: underline;
+}
+
+@include utilities.bps(".line-through") {
+    text-decoration: line-through;
+}
+
+@include utilities.bps(".no-underline") {
+    text-decoration: none;
+}
+
+@include utilities.bps(".uppercase") {
+    text-transform: uppercase;
+}
+
+@include utilities.bps(".lowercase") {
+    text-transform: lowercase;
+}
+
+@include utilities.bps(".capitalize") {
+    text-transform: capitalize;
+}
+
+@include utilities.bps(".normal-case") {
+    text-transform: none;
+}
+
+@include utilities.bps(".truncate") {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@include utilities.bps(".overflow-ellipsis") {
+    text-overflow: ellipsis;
+}
+
+@include utilities.bps(".overflow-clip") {
+    text-overflow: clip;
+}
+
+@include utilities.bps(".break-normal") {
+    word-break: normal;
+    overflow-wrap: normal;
+}
+
+@include utilities.bps(".break-words") {
+    overflow-wrap: break-word;
+}
+
+@include utilities.bps(".break-all") {
+    word-break: break-all;
+}

@@ -1,0 +1,531 @@
+@use "utilities";
+
+a:has(img[alt="Google"]), div:has(> .gmnoprint [title="Keyboard shortcuts"]) {
+    display: none !important;
+}
+
+.map_wrapper {
+    // --rounded_lg: 26px;
+    --mode: lg;
+    --map_block_size: 70vh;
+    --map_venue_block_size: 200px;
+    --map_venues_sidebar_inline_size: 380px;
+    position: relative;
+    @include utilities.bp("1t2e") {
+        --mode: sm;
+        --map_block_size: 80vh;
+    }
+    &:has(.map_venues) {
+        @include utilities.bp("3") {
+            display: grid;
+            grid-template-columns: 1fr var(--map_venues_sidebar_inline_size);
+            gap: var(--spacing_4);
+        }
+
+        .map {
+            @include utilities.bp("1t2e") {
+                overflow: clip;
+            }
+            &::before, &::after {
+                @include utilities.bp("1t2e") {
+                    position: absolute;
+                    z-index: 1;
+                    inset-block: 0;
+                    inline-size: 1px;
+                    content: "";
+                }
+            }
+            &::before {
+                @include utilities.bp("1t2e") {
+                    inset-inline-start: -1px;
+                    box-shadow: 1px 0 6px color-mix(in oklab, var(--color_black), var(--color_transparent) 50%);
+                }
+            }
+            &::after {
+                @include utilities.bp("1t2e") {
+                    inset-inline-end: -1px;
+                    box-shadow: -1px 0 6px color-mix(in oklab, var(--color_black), var(--color_transparent) 50%);
+                }
+            }
+        }
+    }
+}
+
+.map {
+    block-size: var(--map_block_size);
+    @include utilities.bp("1t2e") {
+        display: none;
+    }
+    @include utilities.bp("3") {
+        border-radius: var(--rounded_lg);
+    }
+    &.map_mode {
+        @include utilities.bp("1t2e") {
+            display: block;
+        }
+    }
+}
+
+.map_marker {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: end;
+    transform: translate(-50%, -100%);
+    width: 26px;
+    height: 32px;
+}
+
+.map_current_location {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+}
+
+.map_ui {
+    display: grid;
+    @include utilities.bp("3") {
+        align-content: start;
+        gap: var(--spacing_4);
+        block-size: var(--map_block_size);
+    }
+}
+
+.map_controls {
+    &:has(.map_mode_search + .map_gps) {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        gap: var(--spacing_4);
+    }
+}
+
+.map_mode_search {
+    &:has(.map_mode_toggle) {
+        @include utilities.bp("1t2e") {
+            display: grid;
+            position: relative;
+        }
+        .map_mode_toggle, .map_search {
+            @include utilities.bp("1t2e") {
+                grid-row: 1 / -1;
+                grid-column: 1 / -1;
+            }
+        }
+        .map_search {
+            @include utilities.bp("1t2e") {
+                position: absolute;
+                transition: var(--transition_duration_normal) inline-size var(--transition_easing_cubic);
+                inset-inline-end: 0;
+                inline-size: 100%;
+            }
+            .field__suggestions {
+                @include utilities.bp("1t2e") {
+                    opacity: 1;
+                    transition: var(--transition_duration_normal) var(--transition_duration_normal) opacity var(--transition_easing_cubic);
+                }
+            }
+            &.is_collapsed {
+                @include utilities.bp("1t2e") {
+                    inline-size: calc(20px + (1em * 2) + 2px);
+                }
+                .field__suggestions {
+                    @include utilities.bp("1t2e") {
+                        opacity: 0;
+                        transition: 0s opacity var(--transition_easing_cubic);
+                    }
+                }
+            }
+        }
+    }
+    &:has(.map_search) {
+        .map_mode_toggle {
+            @include utilities.bp("1t2e") {
+                margin-inline-end: calc(20px + (1em * 2) + 2px + var(--spacing_4));
+            }
+        }
+    }
+}
+
+.map_search {
+    position: relative;
+    .form__wrapper {
+        overflow: visible;
+    }
+    form {
+        display: grid;
+        justify-content: end;
+        transition: background-color 0.3s ease;
+        border: 1px solid var(--color_border);
+        border-radius: var(--rounded_lg);
+        background-color: var(--color_background);
+        min-block-size: 3.25rem;
+        &:has(.field__suggestions) {
+            border-end-start-radius: 0;
+        }
+        .field__autocomplete {
+            position: static;
+        }
+        .field__wrapper {
+            position: absolute;
+            margin-block-end: 0;
+            inline-size: calc(100% - (20px + (1em * 2)));
+        }
+        input {
+            border-width: 0;
+            background-color: transparent;
+            &:focus, &:active {
+                background-color: transparent;
+            }
+        }
+        .field__suggestions {
+            inset-inline-end: -1px;
+            inset-inline-start: -1px;
+            border-block-start-width: 1px;
+        }
+        svg {
+            position: relative;
+            cursor: pointer;
+            padding-inline: 1em;
+            inline-size: calc(20px + (1em * 2));
+            min-block-size: 3.25rem;
+        }
+    }
+}
+
+.map_gps {
+    background-color: var(--color_background);
+}
+
+.map_mode_toggle {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 1px solid var(--color_border);
+    border-radius: var(--rounded_lg);
+    background-color: var(--color_background);
+    @include utilities.bp("3") {
+        display: none;
+    }
+    button {
+        position: relative;
+        transition: var(--transition_duration_fast) color ease;
+        cursor: pointer;
+        background-color: transparent;
+        padding: var(--spacing_2);
+        min-block-size: 3.25rem;
+        color: var(--color_border);
+        font-weight: bold;
+        &::after {
+            position: absolute;
+            inset-block: 5px;
+            inset-inline-end: 0;
+            border-inline-end: 1px solid var(--color_border);
+            content: "";
+        }
+        &:last-child {
+            &::after {
+                display: none;
+            }
+        }
+        &.is_selected {
+            color: var(--color_text);
+        }
+    }
+}
+
+.map_wrapper {
+    &:has(.map.map_mode) {
+        block-size: var(--map_block_size);
+        .map_controls {
+            @include utilities.bp("1t2e") {
+                position: absolute;
+                inset-block-start: 0;
+                inset-inline: 0;
+                padding: var(--spacing_4);
+                pointer-events: none;
+            }
+            & > * {
+                @include utilities.bp("1t2e") {
+                    pointer-events: auto;
+                }
+            }
+        }
+        .map_venues {
+            &::-webkit-scrollbar {
+                @include utilities.bp("1t2e") {
+                    display: none;
+                }
+            }
+            @include utilities.bp("1t2e") {
+                --direction: x;
+                display: flex;
+                position: absolute;
+                align-items: end;
+                inset-block-end: 0;
+                inset-inline: 0;
+                padding-block-end: var(--spacing_4);
+                scroll-snap-type: x mandatory;
+                touch-action: pan-x;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                pointer-events: none;
+                @include utilities.scroll_x;
+            }
+            .venue {
+                @include utilities.bp("1t2e") {
+                    display: grid;
+                    flex-shrink: 0;
+                    background-color: var(--color_background);
+                    width: clamp(256px, 75%, 350px);
+                    min-block-size: var(--map_venue_block_size);
+                    scroll-margin-inline-start: var(--spacing_4);
+                    pointer-events: auto;
+                }
+                &:first-child {
+                    @include utilities.bp("1t2e") {
+                        margin-inline-start: var(--spacing_4);
+                    }
+                }
+                &:last-child {
+                    @include utilities.bp("1t2e") {
+                        margin-inline-end: var(--spacing_4);
+                    }
+                }
+            }
+        }
+        .map_venues_nav {
+            @include utilities.bp("1t2e") {
+                display: block;
+            }
+        }
+        .venue_info {
+            @include utilities.bp("1t2e") {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+        }
+    }
+    &:has(.map.list_mode) {
+        .map_controls {
+            @include utilities.bp("1t2e") {
+                position: sticky;
+                z-index: 2;
+                inset-block-start: var(--block_size_header_total);
+                box-shadow: 0 2px 6px var(--color_dark_transparent);
+                background-color: var(--color_background);
+                padding: var(--spacing_4);
+            }
+        }
+        .map_venues {
+            @include utilities.bp("1t2e") {
+                padding: var(--spacing_4);
+            }
+            .venue {
+                @include utilities.bp("1t2e") {
+                    scroll-margin-block-start: calc(var(--spacing_4) + 86px);
+                }
+            }
+        }
+    }
+}
+
+.map_venues {
+    display: grid;
+    gap: var(--spacing_4);
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    --direction: y;
+    @include utilities.bp("3") {
+        scroll-snap-type: y mandatory;
+        @include utilities.scroll_y;
+        @include utilities.scroll_y_shadow;
+    }
+    .venue {
+        position: relative;
+        border: 1px solid var(--color_border);
+        border-radius: var(--rounded_sm);
+        padding: var(--spacing_4);
+        scroll-snap-align: start;
+        @include utilities.bp("3") {
+            scroll-margin-block-start: var(--spacing_4);
+        }
+        .venue_distance {
+            position: absolute;
+            inset-block-start: 0;
+            inset-inline-end: 0;
+            border-style: solid;
+            border-color: var(--color_border);
+            border-inline-start-width: 1px;
+            border-block-end-width: 1px;
+            border-start-end-radius: var(--rounded_sm);
+            border-end-start-radius: var(--rounded_sm);
+            background-color: var(--color_background);
+            padding: var(--spacing_1);
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+        .venue__dismiss {
+            --dismiss_icon_padding: var(--spacing_5);
+            --dismiss_icon_length: 14px;
+            @extend %overlay__dismiss;
+            inline-size: calc(1rem + 1lh);
+            color: var(--color_text);
+        }
+        &:has(.venue_info_detailed:empty) {
+            .venue_btn_expand, .venue__dismiss {
+                display: none;
+            }
+        }
+    }
+}
+
+.map_venues_nav {
+    display: none;
+    .swiper-button-prev, .swiper-button-next {
+        margin-block-start: 0;
+        inset-block-end: calc(var(--map_venue_block_size) / 2);
+        inset-block-start: auto;
+    }
+    .swiper-button-prev {
+        margin-inline-start: 10px;
+        inset-inline-start: 0;
+    }
+    .swiper-button-next {
+        margin-inline-end: 10px;
+        inset-inline-end: 0;
+    }
+}
+
+.venue_info {
+    .expand__panel {
+        align-items: start;
+        transition-duration: var(--transition_duration_fast);
+    }
+}
+
+.venue-dismiss-fade-enter-active,
+.venue-dismiss-fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.venue-dismiss-fade-enter-from,
+.venue-dismiss-fade-leave-to {
+    opacity: 0;
+}
+
+.venue_info_summary {
+    display: grid;
+    gap: var(--spacing_4);
+    cursor: pointer;
+    font-size: 0.95rem;
+    @include utilities.bp("1t2e") {
+        font-size: 0.85rem;
+    }
+    &:has(img) {
+        grid-template-columns: 75px 1fr;
+    }
+    &:empty {
+        display: none;
+    }
+    img {
+        border-radius: var(--rounded_sm);
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: center;
+    }
+    header {
+        margin-block: auto;
+        padding-inline-end: var(--spacing_5);
+        overflow: hidden;
+    }
+}
+
+.venue_name, .venue_address {
+    margin-block: var(--spacing_0);
+}
+
+.venue_name {
+    margin-block-end: var(--spacing_1);
+    font-weight: bold;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    text-wrap: pretty;
+    @include utilities.bp("3") {
+        font-size: 1.1rem;
+    }
+}
+
+.venue_address {
+    @include utilities.bp("1t2e") {
+        font-size: 0.9rem;
+    }
+}
+
+.venue_btn_expand {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing_2);
+    margin-block-start: var(--spacing_4);
+    .btn {
+        flex-grow: 1;
+        outline-offset: -2px;
+    }
+    .expand__panel:has(&) {
+        @include utilities.bp("1t2e") {
+            margin-block-start: auto;
+        }
+    }
+}
+
+.venue_info_detailed {
+    margin-block-start: var(--spacing_4);
+    font-size: 0.95rem;
+    @include utilities.bp("1t2e") {
+        font-size: 0.9rem;
+    }
+    &:empty {
+        display: none;
+    }
+}
+
+.venue_phone, .venue_url {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing_2);
+    margin-block-end: var(--spacing_2);
+}
+
+.venue_opening_times {
+    margin-block-start: var(--spacing_4);
+    header {
+        margin-block-end: var(--spacing_1);
+        font-weight: bold;
+    }
+    ul {
+        display: grid;
+        grid-template-columns: 1fr max-content;
+        margin-block-start: var(--spacing_0);
+        font-size: 0.9rem;
+    }
+    li {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
+        margin-block-end: var(--spacing_0);
+        padding: var(--spacing_1) var(--spacing_2);
+        @include utilities.bp("1t2e") {
+            padding-block: var(--spacing_px);
+        }
+        &:nth-child(odd) {
+            background-color: var(--color_background__field);
+        }
+    }
+}
+
+.venue_booking_url {
+    margin-block-start: var(--spacing_4);
+}

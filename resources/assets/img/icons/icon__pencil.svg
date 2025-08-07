@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.94" height="18.94" viewBox="0 0 18.94 18.94">
+	<g id="design">
+		<rect class="fill-1" x="0.5" y="0.5" width="17.94" height="17.94" rx="8.65" style="fill:none;stroke-miterlimit:10"/>
+		<polygon class="fill-1" points="6.16 11.4 6.16 12.78 7.54 12.78 11.61 8.71 10.23 7.33 6.16 11.4"/>
+		<path class="fill-1" d="M12.67,7.13l-.86-.86a.37.37,0,0,0-.52,0l-.67.67L12,8.32l.67-.67A.36.36,0,0,0,12.67,7.13Z"/>
+	</g>
+</svg>

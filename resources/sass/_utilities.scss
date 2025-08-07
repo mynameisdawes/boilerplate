@@ -1,0 +1,208 @@
+@use "sass:list";
+@use "sass:map";
+@use "variables";
+
+@use "sass:math";
+
+@mixin cbp($min_width: null, $max_width: null) {
+    @if ($min_width == null) {
+        @media (max-width: #{$max_width}) {
+            @content;
+        }
+    } @else if ($max_width == null) {
+        @media (min-width: #{$min_width}) {
+            @content;
+        }
+    } @else {
+        @media (min-width: #{$min_width}) and (max-width: #{$max_width}) {
+            @content;
+        }
+    }
+}
+
+@mixin bp($size) {
+    $size: $size + "";
+    @if map.has-key(variables.$breakpoints, $size) {
+        $media_query: map.get(variables.$breakpoints, $size);
+        @if (map.get($media_query, "min_width") == null) {
+            @media (max-width: #{map.get($media_query, 'max_width')}) {
+                @content;
+            }
+        } @else if (map.get($media_query, "max_width") == null) {
+            @media (min-width: #{map.get($media_query, 'min_width')}) {
+                @content;
+            }
+        } @else {
+            @media (min-width: #{map.get($media_query, 'min_width')}) and (max-width: #{map.get($media_query, 'max_width')}) {
+                @content;
+            }
+        }
+    }
+}
+
+@mixin bpso($selector, $include: null, $state: null) {
+    @each $breakpoint_name, $breakpoint in variables.$breakpoints {
+        @if ($include == null or ($include != null and list.index($include, $breakpoint_name) != null)) {
+            #{$selector}\:#{$breakpoint_name}#{$state} {
+                @include bp($breakpoint_name) {
+                    @content;
+                }
+            }
+        }
+    }
+}
+
+@mixin bps($selector, $include: null, $state: null) {
+    #{$selector}#{$state} {
+        @content;
+    }
+    @each $breakpoint_name, $breakpoint in variables.$breakpoints {
+        @if ($include == null or ($include != null and list.index($include, $breakpoint_name) != null)) {
+            #{$selector}\:#{$breakpoint_name}#{$state} {
+                @include bp($breakpoint_name) {
+                    @content;
+                }
+            }
+        }
+    }
+}
+
+@mixin scroll_x {
+    overflow-x: auto;
+    overflow-y: clip;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes scroll-shadow-inset-x {
+    0% {
+        box-shadow: inset -6px 0px 4px -4px var(--color_border), inset 6px 0px 4px -4px transparent;
+    }
+
+    10%, 90% {
+        box-shadow: inset -6px 0px 4px -4px var(--color_border), inset 6px 0px 4px -4px var(--color_border);
+    }
+
+    100% {
+        box-shadow: inset -6px 0px 4px -4px transparent, inset 6px 0px 4px -4px var(--color_border);
+    }
+}
+
+@mixin scroll_x_shadow {
+    @supports (animation-timeline: scroll()) {
+        animation: scroll-shadow-inset-x linear;
+        animation-timeline: scroll(self inline);
+    }
+}
+
+@mixin scroll_y {
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes scroll-shadow-inset-y {
+    0% {
+        box-shadow: inset 0px -6px 4px -4px var(--color_border), inset 0px 6px 4px -4px transparent;
+    }
+
+    0.2%, 99.8% {
+        box-shadow: inset 0px -6px 4px -4px var(--color_border), inset 0px 6px 4px -4px var(--color_border);
+    }
+
+    100% {
+        box-shadow: inset 0px -6px 4px -4px transparent, inset 0px 6px 4px -4px var(--color_border);
+    }
+}
+
+@mixin scroll_y_shadow {
+    @supports (animation-timeline: scroll()) {
+        animation: scroll-shadow-inset-y linear;
+        animation-timeline: scroll(self block);
+    }
+}
+
+%no_select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+%el__spacing {
+    margin-block-end: var(--spacing_4);
+    &:first-child {
+        margin-block-start: 0;
+    }
+    &:last-child {
+        margin-block-end: 0;
+    }
+}
+
+%overlay {
+    display: flex;
+    position: fixed;
+    perspective: 100px;
+    opacity: 0;
+    z-index: 1003;
+    backdrop-filter: blur(4px) opacity(0);
+    transition: left 0s 0.8s, right 0s 0.8s, opacity 0.5s 0.3s ease, backdrop-filter 0.5s 0.3s ease;
+    cursor: pointer;
+    inset-block-end: 0;
+    inset-block-start: 0;
+    inset-inline-end: 100%;
+    inset-inline-start: -100%;
+    outline: 0;
+    background-color: color-mix(in oklab, var(--color_black), var(--color_transparent) 20%);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    overscroll-behavior: contain;
+    pointer-events: none;
+    &.is_open {
+        opacity: 1;
+        backdrop-filter: blur(4px) opacity(1);
+        transition: left 0s, right 0s, opacity 0.5s ease, backdrop-filter 0.5s ease;
+        inset-inline-end: 0;
+        inset-inline-start: 0;
+        pointer-events: initial;
+        @include scroll_y;
+    }
+}
+
+%overlay__dismiss {
+    --dismiss_icon_padding: 1.5rem;
+    --dismiss_icon_thickness: 3px;
+    --dismiss_icon_length: 30px;
+    display: grid;
+    position: absolute;
+    grid-template-areas: "dismiss_icon";
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    cursor: pointer;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    background-color: var(--color_transparent);
+    padding: var(--dismiss_icon_padding);
+    aspect-ratio: 1;
+    color: var(--color_border);
+    &::before, &::after {
+        position: relative;
+        grid-area: dismiss_icon;
+        background-color: color-mix(in oklab, currentColor, var(--color_background) 30%);
+        inline-size: var(--dismiss_icon_length);
+        block-size: var(--dismiss_icon_thickness);
+        content: "";
+    }
+    &::before {
+        rotate: 45deg;
+    }
+    &::after {
+        rotate: -45deg;
+    }
+    &:hover {
+        &::before, &::after {
+            background-color: currentColor;
+        }
+    }
+}

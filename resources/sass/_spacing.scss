@@ -1,0 +1,137 @@
+@use "utilities";
+@use "variables";
+
+:root {
+    @each $spacing_name, $spacing_size in variables.$spacings {
+        --spacing_#{$spacing_name}: #{$spacing_size};
+    }
+}
+
+$spacing_types: ("p": "padding",
+    "m": "margin",
+    "-m": "margin",
+);
+
+@each $spacing_type__abv,
+$spacing_type in $spacing_types {
+    $areas: ("": ("#{$spacing_type}",
+        ),
+        "y": ("#{$spacing_type}-block-start", "#{$spacing_type}-block-end"),
+        "t": ("#{$spacing_type}-block-start"),
+        "b": ("#{$spacing_type}-block-end"),
+        "x": ("#{$spacing_type}-inline"),
+        "l": ("#{$spacing_type}-inline-start"),
+        "r": ("#{$spacing_type}-inline-end"),
+    );
+
+    @each $area__name,
+    $area in $areas {
+
+        @each $spacing_name,
+        $spacing_size in variables.$spacings {
+            .#{$spacing_type__abv}#{$area__name}-#{$spacing_name} {
+                @each $area__prop in $area {
+                    @if ($spacing_type__abv=="-m") {
+                        #{$area__prop}: calc(var(--spacing_#{$spacing_name}) * -1);
+                    }
+
+                    @else {
+                        @if ($area__prop=="padding-block-start") {
+                            #{$area__prop}: calc(var(--spacing_#{$spacing_name}) + var(--_padding_compensation, 0px));
+                        }
+                        @else {
+                            #{$area__prop}: var(--spacing_#{$spacing_name});
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @each $area__name,
+    $area in $areas {
+
+        @each $spacing_name,
+        $spacing_size in variables.$spacings {
+            @include utilities.bpso(".#{$spacing_type__abv}#{$area__name}-#{$spacing_name}"
+
+            ) {
+                @each $area__prop in $area {
+                    @if ($spacing_type__abv=="-m") {
+                        #{$area__prop}: calc(var(--spacing_#{$spacing_name}) * -1);
+                    }
+
+                    @else {
+                        @if ($area__prop=="padding-block-start") {
+                            #{$area__prop}: calc(var(--spacing_#{$spacing_name}) + var(--_padding_compensation, 0px));
+                        }
+                        @else {
+                            #{$area__prop}: var(--spacing_#{$spacing_name});
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include utilities.bps(".p-gutter") {
+    padding: var(--gutter);
+}
+
+@include utilities.bps(".px-gutter") {
+    padding-inline: var(--gutter);
+}
+
+@include utilities.bps(".py-gutter") {
+    padding-block-start: var(--gutter);
+    padding-block-end: var(--gutter);
+}
+
+@include utilities.bps(".gap-gutter") {
+    gap: var(--gutter);
+}
+
+@include utilities.bps(".gapx-gutter") {
+    gap: 0 var(--gutter);
+}
+
+@include utilities.bps(".gapy-gutter") {
+    gap: var(--gutter) 0;
+}
+
+@include utilities.bps(".mt-gutter") {
+    margin-block-start: var(--gutter);
+}
+
+@include utilities.bps(".mb-gutter") {
+    margin-block-end: var(--gutter);
+}
+
+@include utilities.bps(".m-auto") {
+    margin: auto;
+}
+
+@include utilities.bps(".my-auto") {
+    margin-block: auto;
+}
+
+@include utilities.bps(".mt-auto") {
+    margin-block-start: auto;
+}
+
+@include utilities.bps(".mb-auto") {
+    margin-block-end: auto;
+}
+
+@include utilities.bps(".mx-auto") {
+    margin-inline: auto;
+}
+
+@include utilities.bps(".ml-auto") {
+    margin-inline-start: auto;
+}
+
+@include utilities.bps(".mr-auto") {
+    margin-inline-end: auto;
+}

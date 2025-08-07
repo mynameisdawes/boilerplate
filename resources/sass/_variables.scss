@@ -1,0 +1,175 @@
+@use "sass:list";
+
+$breakpoints: (
+    "1e": (
+        min_width: null,
+        max_width: 579px,
+    ),
+    "1t2e": (
+        min_width: null,
+        max_width: 767px,
+    ),
+    "2e": (
+        min_width: 580px,
+        max_width: 767px,
+    ),
+    "2t3e": (
+        min_width: 580px,
+        max_width: 991px,
+    ),
+    "2": (
+        min_width: 580px,
+        max_width: null,
+    ),
+    "1t3e": (
+        min_width: null,
+        max_width: 991px,
+    ),
+    "3e": (
+        min_width: 768px,
+        max_width: 991px,
+    ),
+    "3": (
+        min_width: 768px,
+        max_width: null,
+    ),
+    "4": (
+        min_width: 992px,
+        max_width: null,
+    ),
+);
+
+$breakpoints_common: ("1t2e", "3");
+
+$breakpoints_all: ();
+
+@each $breakpoint_name, $breakpoint in $breakpoints {
+    $breakpoints_all: list.append($breakpoints_all, $breakpoint_name);
+}
+
+$container_sizes: (
+    "sm": 640px,
+    "md": 768px,
+    "lg": 1024px,
+    "xl": 1280px,
+    "2xl": 1536px,
+);
+
+:root {
+    @each $container_name, $container_size in $container_sizes {
+        --container_#{$container_name}: #{$container_size};
+    }
+}
+
+:root {
+    --line-height: 1.5;
+    --font-size: 16px;
+    --transition_easing_cubic: cubic-bezier(0.77, 0, 0.175, 1);
+    --transition_duration_fast: 0.3s;
+    --transition_duration_normal: 0.45s;
+    --transition_duration_slow: 0.65s;
+    --infinity: 9999px;
+    --rounded_sm: 5px;
+    --rounded_lg: var(--rounded_sm);
+    --color_transparent: transparent;
+    --color_currentColor: currentColor;
+    --color_black: #000000;
+    --color_white: #ffffff;
+    --color_background: var(--color_white);
+    --color_background_contrasting: #52525b;
+    --color_header_background: var(--color_white);
+    --color_primary: #325f77;
+    --color_primary_dark: color-mix(in oklab, var(--color_primary), var(--color_black) 10%);
+    --color_primary_light: color-mix(in oklab, var(--color_primary), var(--color_white) 10%);
+    --color_primary_contrasting: var(--color_background);
+    --color_primary_linear_gradient: linear-gradient(in oklab to right, var(--color_primary_dark), var(--color_primary));
+    --color_primary_radial_gradient: radial-gradient(in oklab, var(--color_primary), var(--color_primary_dark));
+    --color_secondary: #46908c;
+    --color_secondary_dark: color-mix(in oklab, var(--color_secondary), var(--color_black) 10%);
+    --color_secondary_light: color-mix(in oklab, var(--color_secondary), var(--color_white) 10%);
+    --color_secondary_contrasting: var(--color_background);
+    --color_secondary_linear_gradient: linear-gradient(in oklab to right, var(--color_secondary_dark), var(--color_secondary));
+    --color_secondary_radial_gradient: radial-gradient(in oklab, var(--color_secondary), var(--color_secondary_dark));
+    --color_accent: var(--color_primary);
+    --color_neutral: var(--color_secondary);
+    --color_neutral_contrasting: var(--color_secondary_contrasting);
+    --color_positive: #568d00;
+    --color_positive_contrasting: var(--color_background);
+    --color_warning: #da9b00;
+    --color_warning_contrasting: var(--color_background);
+    --color_negative: #96002d;
+    --color_negative_contrasting: var(--color_background);
+    --color_dark_transparent: color-mix(in oklab, var(--color_black), var(--color_transparent) 90%);
+    --color_light_transparent: color-mix(in oklab, var(--color_white), var(--color_transparent) 90%);
+    --color_background__field: color-mix(in oklab, var(--color_background), var(--color_background_contrasting) 7%);
+    --color_background__accent: color-mix(in oklab, var(--color_background), var(--color_background_contrasting) 17%);
+    --color_border: color-mix(in oklab, var(--color_background), var(--color_background_contrasting) 15%);
+    --color_header_border: color-mix(in oklab, var(--color_background), var(--color_background_contrasting) 15%);
+    --color_icon: color-mix(in oklab, var(--color_background), var(--color_background_contrasting) 47%);
+    --color_text: var(--color_background_contrasting);
+    --color_text_contrasting: var(--color_background);
+    --color_header_text: var(--color_background_contrasting);
+    --color_header_text_contrasting: var(--color_background);
+    --color_text__validation: var(--color_negative);
+    --selection_background: var(--color_primary);
+    --selection_color: var(--color_primary_contrasting);
+    --block_size_header_content: 30px;
+    --block_size_header: 60px;
+    --block_size_header_actions: 40px;
+    --block_size_footer_actions: 50px;
+    --navigation_icon_size: 20px;
+    --navigation_icon_border_width: 3px;
+    --slider_border_width: 3px;
+    --slider_size: 60px;
+    --slider_handle_size: 28px;
+    --input_checkbox_radio_size_sm: 20px;
+    --input_checkbox_radio_border_width_sm: 1px;
+    --input_checkbox_radio_size_lg: 36px;
+    --input_checkbox_radio_border_width_lg: 2px;
+    --input_switch_handle_padding: 1px;
+};
+
+@media screen {
+    html[color-scheme="dark" i] {
+        --color_background: #1f2329;
+        --color_background_contrasting: #dae7ea;
+        --color_header_background: #1a1e23;
+        --color_primary_contrasting: var(--color_background_contrasting);
+        --color_secondary_contrasting: var(--color_background_contrasting);
+        --color_dark_transparent: color-mix(in oklab, var(--color_black), var(--color_transparent) 70%);
+    }
+}
+
+$spacings: (
+    "0": 0px,
+    "px": 1px,
+    "1": 0.25rem,
+    "2": 0.5rem,
+    "3": 0.75rem,
+    "4": 1rem,
+    "5": 1.25rem,
+    "6": 1.5rem,
+    "7": 1.75rem,
+    "8": 2rem,
+    "9": 2.25rem,
+    "10": 2.5rem,
+    "11": 2.75rem,
+    "12": 3rem,
+    "14": 3.5rem,
+    "16": 4rem,
+    "20": 5rem,
+    "24": 6rem,
+    "28": 7rem,
+    "32": 8rem,
+    "36": 9rem,
+    "40": 10rem,
+    "44": 11rem,
+    "48": 12rem,
+    "52": 13rem,
+    "56": 14rem,
+    "60": 15rem,
+    "64": 16rem,
+    "72": 18rem,
+    "80": 20rem,
+    "96": 24rem,
+);

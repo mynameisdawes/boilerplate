@@ -1,0 +1,37 @@
+{
+    "name": "vektor/paypal",
+    "description": "Paypal",
+    "keywords": [
+        "vektor",
+        "paypal"
+    ],
+    "homepage": "https://github.com/vektor/paypal",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "paypal/rest-api-sdk-php": "^1.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Paypal\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Paypal\\PaypalServiceProvider"
+            ]
+        }
+    }
+}

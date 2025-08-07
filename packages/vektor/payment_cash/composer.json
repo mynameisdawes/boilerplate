@@ -1,0 +1,36 @@
+{
+    "name": "vektor/cash",
+    "description": "Cash",
+    "keywords": [
+        "vektor",
+        "cash"
+    ],
+    "homepage": "https://github.com/vektor/cash",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Cash\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Cash\\CashServiceProvider"
+            ]
+        }
+    }
+}

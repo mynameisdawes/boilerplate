@@ -1,0 +1,2 @@
+<div class="swiper-button-prev"><img src="{{ url('assets/img/icons/swiper_button_prev.svg') }}" alt="Previous" width="150" height="150" /></div>
+<div class="swiper-button-next"><img src="{{ url('assets/img/icons/swiper_button_next.svg') }}" alt="Next" width="150" height="150" /></div>

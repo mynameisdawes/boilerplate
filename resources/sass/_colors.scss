@@ -1,0 +1,50 @@
+@use "utilities";
+
+$colors: (
+    "transparent": var(--color_transparent),
+    "current": var(--color_currentColor),
+    "black": var(--color_black),
+    "white": var(--color_white),
+
+    "background": var(--color_background),
+    "background_contrasting": var(--color_background_contrasting),
+    "header_background": var(--color_header_background),
+
+    "primary": var(--color_primary),
+    "primary_dark": var(--color_primary_dark),
+    "primary_light": var(--color_primary_light),
+    "primary_contrasting": var(--color_primary_contrasting),
+    "secondary": var(--color_secondary),
+    "secondary_dark": var(--color_secondary_dark),
+    "secondary_light": var(--color_secondary_light),
+    "secondary_contrasting": var(--color_secondary_contrasting),
+    "neutral": var(--color_neutral),
+    "neutral_contrasting": var(--color_neutral_contrasting),
+    "positive": var(--color_positive),
+    "positive_contrasting": var(--color_positive_contrasting),
+    "warning": var(--color_warning),
+    "warning_contrasting": var(--color_warning_contrasting),
+    "negative": var(--color_negative),
+    "negative_contrasting": var(--color_negative_contrasting),
+);
+
+@mixin apply_color_to_property($class_prefix, $css_property) {
+    [class="^hover\\:#{$class_prefix}"] {
+        transition: #{$css_property} var(--transition_duration_fast) ease;
+    }
+
+    @each $color_name,
+    $color_hex in $colors {
+        @include utilities.bps(".#{$class_prefix}-#{$color_name}") {
+            #{$css_property}: $color_hex;
+        }
+
+        @include utilities.bps(".hover\\:#{$class_prefix}-#{$color_name}",
+            null,
+            ":hover"
+
+        ) {
+            #{$css_property}: $color_hex;
+        }
+    }
+}

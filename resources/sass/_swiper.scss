@@ -1,0 +1,127 @@
+@use "variables";
+@use "utilities";
+
+/*! purgecss start ignore */
+.swiper_outer_wrapper {
+    max-inline-size: 100vw;
+    overflow: clip;
+    position: relative;
+    .swiper {
+        max-inline-size: 100%;
+        overflow: visible;
+        position: static;
+        .swiper-slide {
+            height: auto;
+            transition: var(--transition_duration_fast) scale ease;
+            &:not(.swiper-slide-active) {
+                scale: 0.93;
+            }
+            &.swiper-slide-active {
+                scale: 1;
+            }
+        }
+    }
+}
+
+.swiper-gallery {
+    .swiper-slide img {
+        border-radius: var(--rounded_sm);
+        object-fit: cover;
+        aspect-ratio: 4 / 3;
+    }
+    &.aspect_ratio_16_9 {
+        .swiper-slide img {
+            aspect-ratio: 16 / 9;
+        }
+    }
+    &.aspect_ratio_4_3 {
+        .swiper-slide img {
+            aspect-ratio: 4 / 3;
+        }
+    }
+    &.aspect_ratio_9_16 {
+        .swiper-slide img {
+            aspect-ratio: 9 / 16;
+        }
+    }
+    &.aspect_ratio_3_4 {
+        .swiper-slide img {
+            aspect-ratio: 3 / 4;
+        }
+    }
+    &.aspect_ratio_1 {
+        .swiper-slide img {
+            aspect-ratio: 1;
+        }
+    }
+}
+
+@each $size, $max_width in variables.$container_sizes {
+    .swiper\:#{$size} {
+        padding-inline-start: var(--gutter);
+        padding-inline-end: var(--gutter);
+        @include utilities.cbp($max_width) {
+            inline-size: calc(var(--container_#{$size}) - (2 * var(--gutter)));
+            padding-inline-start: 0;
+            padding-inline-end: 0;
+        }
+    }
+}
+
+.swiper-pagination:empty {
+    display: none;
+}
+
+.swiper-thumbs {
+    &:has(.swiper-wrapper:empty) {
+        display: none;
+    }
+    .swiper-slide {
+        opacity: 0.7;
+        inline-size: 20%;
+
+        &.swiper-slide-thumb-active {
+            opacity: 1;
+        }
+    }
+}
+
+.swiper-button-prev, .swiper-button-next {
+    position: absolute;
+    inline-size: 40px;
+    aspect-ratio: 1;
+    inset-block-start: 50%;
+    z-index: 1;
+    margin-block-start: calc((var(--swiper-pagination-bullet-height) + 1.5rem) * -1);
+    transform: translateY(-50%);
+    border-radius: var(--infinity);
+    background-color: var(--color_border);
+    cursor: pointer;
+    transition: var(--transition_duration_normal) var(--transition_duration_fast) opacity ease, var(--transition_duration_normal) var(--transition_duration_normal) transform ease;
+    opacity: 0.8;
+    transform: scale(1);
+    @include utilities.bp(3) {
+        inline-size: 50px;
+    }
+    &.swiper-button-disabled {
+        transition: var(--transition_duration_slow) opacity ease, var(--transition_duration_slow) transform ease;
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+    }
+}
+
+.swiper-button-prev {
+    inset-inline-start: var(--spacing_3);
+    @include utilities.bp(3) {
+        inset-inline-start: var(--spacing_9);
+    }
+}
+
+.swiper-button-next {
+    inset-inline-end: var(--spacing_3);
+    @include utilities.bp(3) {
+        inset-inline-end: var(--spacing_9);
+    }
+}
+/*! purgecss end ignore */

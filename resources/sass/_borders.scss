@@ -1,0 +1,3 @@
+@use "colors";
+
+@include colors.apply_color_to_property("border", "border-color");

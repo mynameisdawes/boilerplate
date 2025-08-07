@@ -1,0 +1,47 @@
+{
+    "name": "vektor/shop",
+    "description": "Shop",
+    "keywords": [
+        "vektor",
+        "shop"
+    ],
+    "homepage": "https://github.com/vektor/shop",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "calcinai/php-imagick": "^0.1.2",
+        "delfimov/gdimage": "^1.5",
+        "intervention/image": "^2.7",
+        "setasign/fpdi": "^2.4",
+        "spatie/laravel-sluggable": "^3.4",
+        "tecnickcom/tcpdf": "^6.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Shop\\": "src",
+            "Vektor\\Shop\\Database\\Seeders\\": "database/seeders"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Shop\\ShopServiceProvider"
+            ],
+            "aliases": {
+                "Cart": "Vektor\\Shop\\Facades\\Cart",
+                "Customisations": "Vektor\\Shop\\Facades\\Customisations"
+            }
+        }
+    }
+}

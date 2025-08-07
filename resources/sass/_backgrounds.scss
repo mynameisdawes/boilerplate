@@ -1,0 +1,33 @@
+@use "colors";
+
+/*! purgecss start ignore */
+@include colors.apply_color_to_property("bg", "background-color");
+
+.bg-image {
+    --_background_image: var(--landscape_background_image);
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    background-image: var(--_background_image);
+    @media (orientation: portrait) {
+        --_background_image: var(--portrait_background_image, var(--landscape_background_image));
+    }
+}
+
+.bg-primary_linear_gradient, [section_type].bg-primary_linear_gradient {
+    background-image: var(--color_primary_linear_gradient);
+}
+
+.bg-primary_radial_gradient, [section_type].bg-primary_radial_gradient {
+    background-image: var(--color_primary_radial_gradient);
+}
+
+.bg-secondary_linear_gradient, [section_type].bg-secondary_linear_gradient {
+    background-image: var(--color_secondary_linear_gradient);
+}
+
+.bg-secondary_radial_gradient, [section_type].bg-secondary_radial_gradient {
+    background-image: var(--color_secondary_radial_gradient);
+}
+
+/*! purgecss end ignore */

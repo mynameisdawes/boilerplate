@@ -1,0 +1,36 @@
+{
+    "name": "vektor/purchase_order",
+    "description": "PurchaseOrder",
+    "keywords": [
+        "vektor",
+        "purchase_order"
+    ],
+    "homepage": "https://github.com/vektor/purchase_order",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\PurchaseOrder\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\PurchaseOrder\\PurchaseOrderServiceProvider"
+            ]
+        }
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "name": "vektor/utilities",
+    "description": "API",
+    "keywords": [
+        "vektor",
+        "utilities"
+    ],
+    "homepage": "https://github.com/vektor/utilities",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\Utilities\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\Utilities\\UtilitiesServiceProvider"
+            ]
+        }
+    }
+}

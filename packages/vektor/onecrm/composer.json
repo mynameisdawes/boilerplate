@@ -1,0 +1,38 @@
+{
+    "name": "vektor/onecrm",
+    "description": "OneCRM",
+    "keywords": [
+        "vektor",
+        "onecrm"
+    ],
+    "homepage": "https://github.com/vektor/onecrm",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "David Dawes",
+            "email": "david@vektor.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vektor\\OneCRM\\": "src",
+            "OneCRM\\": "api"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vektor\\OneCRM\\OneCRMServiceProvider"
+            ]
+        }
+    }
+}
